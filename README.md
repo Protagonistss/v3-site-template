@@ -15,6 +15,10 @@ pnpm install
 pnpm dev
 ```
 
+Node 版本要求：`^20.19.0 || >=22.12.0`
+
+Sass 运行时：`sass-embedded`，在 Vite 8 下默认走 modern compiler API。
+
 ## 目录约定
 
 ```text

@@ -23,9 +23,14 @@ export default defineConfig(({ mode }) => {
     build: {
       rollupOptions: {
         output: {
-          manualChunks: {
-            framework: ['vue', 'vue-router', 'pinia'],
-            vendor: ['axios', 'dayjs', 'nprogress']
+          manualChunks(id) {
+            if (id.includes('node_modules/vue/') || id.includes('node_modules/vue-router/') || id.includes('node_modules/pinia/')) {
+              return 'framework';
+            }
+
+            if (id.includes('node_modules/axios/') || id.includes('node_modules/dayjs/') || id.includes('node_modules/nprogress/')) {
+              return 'vendor';
+            }
           }
         }
       }
