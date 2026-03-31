@@ -44,7 +44,7 @@ export const staticRoutes: AppRouteRecordRaw[] = [
   {
     path: '/:pathMatch(.*)*',
     name: 'CatchAll',
-    redirect: '/404',
+    component: NotFoundPage,
     meta: {
       title: '兜底路由',
       hidden: true

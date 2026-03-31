@@ -18,6 +18,7 @@ export function setupRouterGuards(router: Router): void {
 
     const authStore = useAuthStore(pinia);
     const hadDynamicRoutes = authStore.routesLoaded;
+    const isTemporaryCatchAll = to.name === 'CatchAll';
 
     if (authStore.token && !authStore.userInfo) {
       await authStore.hydrateProfile();
@@ -39,6 +40,13 @@ export function setupRouterGuards(router: Router): void {
     }
 
     await authStore.ensureRoutes(router);
+
+    if (isTemporaryCatchAll && hasKnownRoutePath(asyncRoutes, to.path)) {
+      return {
+        path: to.fullPath,
+        replace: true
+      };
+    }
 
     if (!to.name) {
       if (!hadDynamicRoutes) {
