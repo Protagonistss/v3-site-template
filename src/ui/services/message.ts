@@ -1,16 +1,16 @@
-import { message } from './discrete';
+import { getMessageApi } from './discrete';
 
 export const uiMessage = {
   success(content: string) {
-    message.success(content);
+    getMessageApi().success(content);
   },
   error(content: string) {
-    message.error(content);
+    getMessageApi().error(content);
   },
   warning(content: string) {
-    message.warning(content);
+    getMessageApi().warning(content);
   },
   info(content: string) {
-    message.info(content);
+    getMessageApi().info(content);
   }
 };

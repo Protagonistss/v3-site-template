@@ -1,45 +1,49 @@
 import type { GlobalThemeOverrides } from 'naive-ui';
 
-export const uiThemeOverrides: GlobalThemeOverrides = {
-  common: {
-    primaryColor: '#1976d2',
-    primaryColorHover: '#1e88e5',
-    primaryColorPressed: '#145ea8',
-    primaryColorSuppl: '#21cbf3',
-    infoColor: '#334155',
-    infoColorHover: '#475569',
-    infoColorPressed: '#1e293b',
-    successColor: '#16a34a',
-    warningColor: '#f59e0b',
-    errorColor: '#dc2626',
-    borderRadius: '16px',
-    borderColor: 'rgba(15, 23, 42, 0.08)',
-    fontFamily: "'Manrope', 'PingFang SC', 'Microsoft YaHei', sans-serif"
-  },
-  Button: {
-    borderRadiusMedium: '14px',
-    borderRadiusSmall: '12px'
-  },
-  Card: {
-    borderRadius: '24px'
-  },
-  Input: {
-    borderRadius: '14px'
-  },
-  Menu: {
-    borderRadius: '12px',
-    itemTextColorInverted: 'rgba(248, 250, 252, 0.72)',
-    itemTextColorActiveInverted: '#ffffff',
-    itemTextColorChildActiveInverted: '#ffffff',
-    itemIconColorInverted: 'rgba(248, 250, 252, 0.72)',
-    itemIconColorActiveInverted: '#ffffff',
-    itemIconColorChildActiveInverted: '#ffffff',
-    itemColorActiveInverted: 'linear-gradient(135deg, #1976d2 0%, #2196f3 100%)',
-    itemColorActiveCollapsedInverted: 'linear-gradient(135deg, #1976d2 0%, #2196f3 100%)',
-    itemColorHoverInverted: 'rgba(255, 255, 255, 0.06)',
-    itemColorHoverCollapsedInverted: 'rgba(255, 255, 255, 0.06)'
-  },
-  Tag: {
-    borderRadius: '999px'
-  }
-};
+import type { ThemeTokens } from '@/theme/brand';
+
+export function createUiThemeOverrides(theme: ThemeTokens): GlobalThemeOverrides {
+  return {
+    common: {
+      primaryColor: theme.color.primary,
+      primaryColorHover: theme.color.primaryHover,
+      primaryColorPressed: theme.color.primaryPressed,
+      primaryColorSuppl: theme.color.primaryAccent,
+      infoColor: theme.color.info,
+      infoColorHover: theme.color.infoHover,
+      infoColorPressed: theme.color.infoPressed,
+      successColor: theme.color.success,
+      warningColor: theme.color.warning,
+      errorColor: theme.color.error,
+      borderRadius: theme.radius.lg,
+      borderColor: theme.color.border,
+      fontFamily: theme.font.sans
+    },
+    Button: {
+      borderRadiusMedium: theme.radius.md,
+      borderRadiusSmall: theme.radius.sm
+    },
+    Card: {
+      borderRadius: theme.radius.xl
+    },
+    Input: {
+      borderRadius: theme.radius.md
+    },
+    Menu: {
+      borderRadius: theme.radius.sm,
+      itemTextColorInverted: theme.color.sidebarText,
+      itemTextColorActiveInverted: theme.color.textContrast,
+      itemTextColorChildActiveInverted: theme.color.textContrast,
+      itemIconColorInverted: theme.color.sidebarText,
+      itemIconColorActiveInverted: theme.color.textContrast,
+      itemIconColorChildActiveInverted: theme.color.textContrast,
+      itemColorActiveInverted: `linear-gradient(135deg, ${theme.color.primary} 0%, ${theme.color.primaryHover} 100%)`,
+      itemColorActiveCollapsedInverted: `linear-gradient(135deg, ${theme.color.primary} 0%, ${theme.color.primaryHover} 100%)`,
+      itemColorHoverInverted: theme.color.sidebarHover,
+      itemColorHoverCollapsedInverted: theme.color.sidebarHover
+    },
+    Tag: {
+      borderRadius: theme.radius.pill
+    }
+  };
+}

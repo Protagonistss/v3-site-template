@@ -36,7 +36,7 @@
 .login-hero__description {
   max-width: 540px;
   margin: 0 0 24px;
-  color: rgba(248, 250, 252, 0.78);
+  color: var(--color-text-contrast-secondary);
   font-size: 18px;
   line-height: 1.7;
 }
@@ -51,9 +51,9 @@
 
 .login-hero__list li {
   width: fit-content;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 999px;
+  border: 1px solid var(--color-contrast-border);
+  border-radius: var(--radius-pill);
   padding: 8px 14px;
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--color-surface-contrast);
 }
 </style>

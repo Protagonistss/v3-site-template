@@ -1,5 +1,5 @@
 <template>
-  <n-config-provider :theme-overrides="uiThemeOverrides">
+  <n-config-provider :theme-overrides="themeOverrides">
     <n-global-style />
     <n-loading-bar-provider>
       <n-dialog-provider>
@@ -14,6 +14,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import {
   NConfigProvider,
   NDialogProvider,
@@ -23,5 +24,10 @@ import {
   NNotificationProvider
 } from 'naive-ui';
 
-import { uiThemeOverrides } from './theme';
+import { useThemeStore } from '@/stores/theme';
+
+import { createUiThemeOverrides } from './theme';
+
+const themeStore = useThemeStore();
+const themeOverrides = computed(() => createUiThemeOverrides(themeStore.resolvedTokens));
 </script>

@@ -48,8 +48,8 @@ const resolvedType = computed(() => {
 
 <style scoped lang="scss">
 :deep(.ui-tag--selected) {
-  background: linear-gradient(135deg, #1976d2 0%, #2196f3 100%);
+  background: var(--gradient-brand);
   border-color: transparent;
-  color: #ffffff;
+  color: var(--color-text-contrast);
 }
 </style>

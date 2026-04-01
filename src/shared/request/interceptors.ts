@@ -1,30 +1,48 @@
 import type { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 
-import { pinia } from '@/stores';
-import { useAuthStore } from '@/stores/auth';
+import { normalizeRequestError } from './errors';
 
-function appendAuthorization(config: InternalAxiosRequestConfig): InternalAxiosRequestConfig {
-  const authStore = useAuthStore(pinia);
+export interface HttpClientRuntimeHooks {
+  getToken: () => string;
+  onUnauthorized?: () => Promise<void> | void;
+}
 
-  if (authStore.token) {
-    config.headers.Authorization = `Bearer ${authStore.token}`;
+function appendAuthorization(
+  config: InternalAxiosRequestConfig,
+  getToken: () => string
+): InternalAxiosRequestConfig {
+  const token = getToken();
+
+  if (token) {
+    if (typeof config.headers.set === 'function') {
+      config.headers.set('Authorization', `Bearer ${token}`);
+    } else {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
   }
 
   return config;
 }
 
-export function attachInterceptors(client: AxiosInstance): void {
-  client.interceptors.request.use(appendAuthorization);
+export function attachInterceptors(client: AxiosInstance, hooks: HttpClientRuntimeHooks): void {
+  let unauthorizedTask: Promise<void> | null = null;
+
+  client.interceptors.request.use((config) => appendAuthorization(config, hooks.getToken));
 
   client.interceptors.response.use(
     (response) => response,
-    (error) => {
-      if (error.response?.status === 401) {
-        const authStore = useAuthStore(pinia);
-        authStore.resetAuth();
+    async (error) => {
+      const normalizedError = normalizeRequestError(error);
+
+      if (normalizedError.status === 401 && hooks.getToken()) {
+        unauthorizedTask ??= Promise.resolve(hooks.onUnauthorized?.()).finally(() => {
+          unauthorizedTask = null;
+        });
+
+        await unauthorizedTask;
       }
 
-      return Promise.reject(error);
+      return Promise.reject(normalizedError);
     }
   );
 }

@@ -34,10 +34,12 @@ import { computed, onMounted } from 'vue';
 
 import AppCard from '@/shared/components/AppCard.vue';
 import { useLoading } from '@/shared/composables/use-loading';
+import { getErrorMessage } from '@/shared/request/client';
 import { useAuthStore } from '@/stores/auth';
 import UiDescriptions from '@/ui/primitives/UiDescriptions.vue';
 import UiSkeleton from '@/ui/primitives/UiSkeleton.vue';
 import UiTag from '@/ui/primitives/UiTag.vue';
+import { uiMessage } from '@/ui/services/message';
 
 import { useDashboardStore } from '../store';
 
@@ -65,7 +67,11 @@ const tagTypeMap = {
 } as const;
 
 onMounted(async () => {
-  await withLoading(() => dashboardStore.fetchOverview());
+  try {
+    await withLoading(() => dashboardStore.fetchOverview());
+  } catch (error) {
+    uiMessage.error(getErrorMessage(error, '加载概览失败'));
+  }
 });
 </script>
 
@@ -120,7 +126,7 @@ onMounted(async () => {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #1976d2 0%, #21cbf3 100%);
+  background: var(--gradient-brand-accent);
   content: '';
 }
 

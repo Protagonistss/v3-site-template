@@ -51,8 +51,9 @@ import UiButton from '@/ui/primitives/UiButton.vue';
 import UiForm from '@/ui/primitives/UiForm.vue';
 import UiFormItem from '@/ui/primitives/UiFormItem.vue';
 import UiInput from '@/ui/primitives/UiInput.vue';
-import { uiMessage } from '@/ui/services/message';
 import type { UiFormInstance, UiFormRules } from '@/ui/types/form';
+import { getErrorMessage } from '@/shared/request/client';
+import { uiMessage } from '@/ui/services/message';
 
 import LoginHero from '../components/LoginHero.vue';
 
@@ -96,7 +97,7 @@ async function handleSubmit() {
 
     uiMessage.success('登录成功');
   } catch (error) {
-    uiMessage.error(error instanceof Error ? error.message : '登录失败');
+    uiMessage.error(getErrorMessage(error, '登录失败'));
   }
 }
 </script>
@@ -106,10 +107,8 @@ async function handleSubmit() {
   display: grid;
   min-height: 100vh;
   grid-template-columns: 1.2fr 0.8fr;
-  background:
-    radial-gradient(circle at top left, rgba(24, 144, 255, 0.25), transparent 35%),
-    linear-gradient(135deg, #06162f 0%, #0f274d 55%, #15396b 100%);
-  color: #f8fafc;
+  background: var(--gradient-login-shell);
+  color: var(--color-text-contrast);
 }
 
 .login-page__hero,

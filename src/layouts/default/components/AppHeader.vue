@@ -10,15 +10,18 @@
       </div>
     </div>
 
-    <UiDropdown :options="userMenuOptions" @select="handleMenuSelect">
-      <div class="app-header__user">
-        <span class="app-header__avatar">{{ userInitial }}</span>
-        <div>
-          <p>{{ authStore.userInfo?.name ?? '未登录' }}</p>
-          <small>{{ authStore.roles.join(', ') || 'guest' }}</small>
+    <div class="app-header__right">
+      <ThemeSwitcher />
+      <UiDropdown :options="userMenuOptions" @select="handleMenuSelect">
+        <div class="app-header__user">
+          <span class="app-header__avatar">{{ userInitial }}</span>
+          <div>
+            <p>{{ authStore.userInfo?.name ?? '未登录' }}</p>
+            <small>{{ authStore.roles.join(', ') || 'guest' }}</small>
+          </div>
         </div>
-      </div>
-    </UiDropdown>
+      </UiDropdown>
+    </div>
   </header>
 </template>
 
@@ -31,6 +34,8 @@ import { useAuthStore } from '@/stores/auth';
 import UiButton from '@/ui/primitives/UiButton.vue';
 import UiDropdown from '@/ui/primitives/UiDropdown.vue';
 import type { UiDropdownOption } from '@/ui/types/dropdown';
+
+import ThemeSwitcher from './ThemeSwitcher.vue';
 
 const appStore = useAppStore();
 const authStore = useAuthStore();
@@ -69,6 +74,12 @@ async function handleMenuSelect(key: string) {
   gap: 16px;
 }
 
+.app-header__right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .app-header__left h1 {
   margin: 0;
   font-size: 24px;
@@ -87,9 +98,9 @@ async function handleMenuSelect(key: string) {
   align-items: center;
   gap: 12px;
   padding: 8px 12px;
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-strong);
   cursor: pointer;
 }
 
@@ -105,8 +116,8 @@ async function handleMenuSelect(key: string) {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: linear-gradient(135deg, #1976d2 0%, #21cbf3 100%);
-  color: #ffffff;
+  background: var(--gradient-brand-accent);
+  color: var(--color-text-contrast);
   font-weight: 700;
 }
 </style>

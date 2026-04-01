@@ -8,6 +8,7 @@ import { filterRoutesByAccess } from '@/shared/permissions/access';
 import { STORAGE_KEYS } from '@/shared/constants/app';
 import { storage } from '@/shared/utils/storage';
 import { fetchProfile, login as loginRequest } from '@/modules/auth/api';
+import { useTabsStore } from '@/stores/tabs';
 import type { LoginCommand, UserProfile } from '@/modules/auth/types';
 
 type AuthSnapshot = Pick<UserProfile, 'roles' | 'permissions'>;
@@ -79,6 +80,8 @@ export const useAuthStore = defineStore('auth', {
       this.routesLoaded = true;
     },
     resetAuth(router?: Router) {
+      const tabsStore = useTabsStore();
+
       this.dynamicRouteNames.forEach((routeName) => {
         if (router?.hasRoute(routeName)) {
           router.removeRoute(routeName);
@@ -92,6 +95,7 @@ export const useAuthStore = defineStore('auth', {
       this.menuRoutes = [];
       this.dynamicRouteNames = [];
       this.routesLoaded = false;
+      tabsStore.reset();
 
       storage.remove(STORAGE_KEYS.token);
       storage.remove(STORAGE_KEYS.user);

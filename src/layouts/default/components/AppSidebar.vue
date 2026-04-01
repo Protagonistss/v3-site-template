@@ -101,8 +101,8 @@ async function handleSelect(key: string) {
   width: 248px;
   height: 100vh;
   flex-direction: column;
-  border-right: 1px solid rgba(15, 23, 42, 0.08);
-  background: rgba(7, 18, 37, 0.96);
+  border-right: 1px solid var(--color-border);
+  background: var(--color-sidebar-bg);
   transition: width 0.2s ease;
 }
 
@@ -115,7 +115,7 @@ async function handleSelect(key: string) {
   align-items: center;
   gap: 12px;
   padding: 20px;
-  color: #f8fafc;
+  color: var(--color-text-contrast);
   font-size: 15px;
   font-weight: 600;
   text-decoration: none;
@@ -138,13 +138,13 @@ async function handleSelect(key: string) {
 :deep(.n-menu-item-content),
 :deep(.n-submenu .n-menu-item-content-header) {
   margin: 4px 12px;
-  border-radius: 12px;
+  border-radius: var(--radius-sm);
   width: calc(100% - 24px);
-  color: rgba(248, 250, 252, 0.72);
+  color: var(--color-sidebar-text);
 }
 
 :deep(.n-menu-item-content--selected) {
-  background: linear-gradient(135deg, #1976d2 0%, #2196f3 100%);
-  color: #ffffff;
+  background: var(--gradient-brand);
+  color: var(--color-text-contrast);
 }
 </style>

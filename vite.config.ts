@@ -28,7 +28,21 @@ export default defineConfig(({ mode }) => {
               return 'framework';
             }
 
-            if (id.includes('node_modules/axios/') || id.includes('node_modules/dayjs/') || id.includes('node_modules/nprogress/')) {
+            if (
+              id.includes('node_modules/naive-ui/') ||
+              id.includes('node_modules/vueuc/') ||
+              id.includes('node_modules/vooks/') ||
+              id.includes('node_modules/vdirs/') ||
+              id.includes('node_modules/treemate/') ||
+              id.includes('node_modules/seemly/') ||
+              id.includes('node_modules/evtd/') ||
+              id.includes('node_modules/css-render/') ||
+              id.includes('node_modules/@css-render/')
+            ) {
+              return 'ui';
+            }
+
+            if (id.includes('node_modules/axios/') || id.includes('node_modules/nprogress/')) {
               return 'vendor';
             }
           }

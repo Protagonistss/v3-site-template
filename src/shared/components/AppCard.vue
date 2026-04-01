@@ -23,11 +23,11 @@ defineProps<{
 
 <style scoped lang="scss">
 .app-card {
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface-strong);
   padding: 24px;
-  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.06);
+  box-shadow: var(--shadow-card);
 }
 
 .app-card__header {

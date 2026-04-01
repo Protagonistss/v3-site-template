@@ -1,11 +1,10 @@
 @use './reset';
-@use './tokens';
 @use './transition';
 
 body {
-  font-family: var(--font-sans);
-  color: var(--color-text-primary);
-  background: #f4f7fb;
+  font-family: var(--font-sans, 'Manrope', 'PingFang SC', 'Microsoft YaHei', sans-serif);
+  color: var(--color-text-primary, #0f172a);
+  background: var(--color-primary-soft, #eaf4ff);
 }
 
 a {
@@ -13,5 +12,8 @@ a {
 }
 
 #nprogress .bar {
-  background: linear-gradient(90deg, #1976d2, #21cbf3);
+  background: var(
+    --gradient-progress,
+    linear-gradient(90deg, #1976d2, #21cbf3)
+  );
 }

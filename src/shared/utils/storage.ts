@@ -12,7 +12,12 @@ export const storage = {
       return null;
     }
 
-    return JSON.parse(raw) as T;
+    try {
+      return JSON.parse(raw) as T;
+    } catch {
+      window.localStorage.removeItem(key);
+      return null;
+    }
   },
   setObject<T>(key: string, value: T): void {
     window.localStorage.setItem(key, JSON.stringify(value));

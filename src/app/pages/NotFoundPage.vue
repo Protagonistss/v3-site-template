@@ -15,19 +15,17 @@
   min-height: 100vh;
   place-items: center;
   padding: 24px;
-  background:
-    radial-gradient(circle at top right, rgba(255, 122, 0, 0.18), transparent 35%),
-    linear-gradient(180deg, #f7f8fc 0%, #eef2f8 100%);
+  background: var(--gradient-notfound-shell);
 }
 
 .exception-card {
   width: min(480px, 100%);
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface-elevated);
   padding: 40px;
   text-align: center;
-  box-shadow: 0 30px 80px rgba(15, 23, 42, 0.08);
+  box-shadow: var(--shadow-elevated);
 }
 
 .exception-code {

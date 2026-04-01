@@ -24,4 +24,11 @@ describe('storage helper', () => {
       name: 'tester'
     });
   });
+
+  it('returns null and clears broken json payloads', () => {
+    window.localStorage.setItem('broken', '{invalid-json');
+
+    expect(storage.getObject('broken')).toBeNull();
+    expect(window.localStorage.getItem('broken')).toBeNull();
+  });
 });

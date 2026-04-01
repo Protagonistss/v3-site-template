@@ -31,7 +31,8 @@ src/
 ├─ router/     # 路由装配
 ├─ shared/     # 跨模块公共能力
 ├─ stores/     # 全局状态
-├─ styles/     # 样式入口与设计令牌
+├─ styles/     # 样式入口与基础样式
+├─ theme/      # 品牌主题单一源与 CSS 变量生成
 └─ types/      # 全局类型声明
 ```
 

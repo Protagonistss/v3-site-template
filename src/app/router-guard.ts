@@ -20,8 +20,19 @@ export function setupRouterGuards(router: Router): void {
     const hadDynamicRoutes = authStore.routesLoaded;
     const isTemporaryCatchAll = to.name === 'CatchAll';
 
-    if (authStore.token && !authStore.userInfo) {
-      await authStore.hydrateProfile();
+    try {
+      if (authStore.token && !authStore.userInfo) {
+        await authStore.hydrateProfile();
+      }
+    } catch (error) {
+      if (!authStore.isAuthenticated) {
+        return {
+          path: appConfig.loginPath,
+          query: { redirect: to.fullPath }
+        };
+      }
+
+      throw error;
     }
 
     if (!authStore.isAuthenticated) {
@@ -39,7 +50,18 @@ export function setupRouterGuards(router: Router): void {
       return appConfig.homePath;
     }
 
-    await authStore.ensureRoutes(router);
+    try {
+      await authStore.ensureRoutes(router);
+    } catch (error) {
+      if (!authStore.isAuthenticated) {
+        return {
+          path: appConfig.loginPath,
+          query: { redirect: to.fullPath }
+        };
+      }
+
+      throw error;
+    }
 
     if (isTemporaryCatchAll && hasKnownRoutePath(asyncRoutes, to.path)) {
       return {

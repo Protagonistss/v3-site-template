@@ -39,6 +39,7 @@ import AppSearchForm from '@/shared/components/AppSearchForm.vue';
 import AppStatusTag from '@/shared/components/AppStatusTag.vue';
 import type { AppDataTableColumn } from '@/shared/components/app-data-table';
 import { useLoading } from '@/shared/composables/use-loading';
+import { getErrorMessage } from '@/shared/request/client';
 import UiButton from '@/ui/primitives/UiButton.vue';
 import UiInput from '@/ui/primitives/UiInput.vue';
 import { uiMessage } from '@/ui/services/message';
@@ -77,7 +78,7 @@ async function loadUsers() {
     const payload = await withLoading(() => fetchSystemUsers(query));
     Object.assign(tableData, payload);
   } catch (error) {
-    uiMessage.error(error instanceof Error ? error.message : '查询失败');
+    uiMessage.error(getErrorMessage(error, '查询失败'));
   }
 }
 

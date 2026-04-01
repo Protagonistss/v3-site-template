@@ -21,9 +21,7 @@ import AppTabsBar from './components/AppTabsBar.vue';
 .layout-shell {
   display: flex;
   min-height: 100vh;
-  background:
-    radial-gradient(circle at top left, rgba(24, 144, 255, 0.08), transparent 30%),
-    linear-gradient(180deg, #f6f8fc 0%, #eef2f8 100%);
+  background: var(--gradient-layout-shell);
 }
 
 .layout-main {
