@@ -44,6 +44,16 @@ src/
 - `pnpm test:unit` 执行 Vitest
 - `pnpm test:e2e` 执行 Playwright
 
+## 环境变量约定
+
+- `.env`、`.env.development`、`.env.production`、`.env.staging` 用于团队共享的环境配置，可以提交到仓库
+- `.env.local`、`.env.development.local`、`.env.production.local` 等本地覆盖文件仅供个人使用，不提交到仓库
+- 前端暴露变量统一使用 `VITE_` 前缀，当前项目使用：
+  - `VITE_APP_TITLE` 应用标题
+  - `VITE_API_BASE_URL` 接口基础地址
+  - `VITE_ENABLE_MOCK` 是否启用 Mock
+- 不要在可提交的 `.env*` 文件中存放密钥、令牌、密码等敏感信息
+
 ## 默认账号
 
 当 `VITE_ENABLE_MOCK=true` 时，可直接使用：

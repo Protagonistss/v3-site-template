@@ -1,6 +1,9 @@
 <template>
   <section class="system-user-page">
-    <AppCard title="用户管理" description="业务模块内自带页面、API 和局部组件。">
+    <AppCard
+      title="用户管理"
+      description="业务模块内自带页面、API 和局部组件。"
+    >
       <AppSearchForm class="system-user-page__toolbar" @submit="handleSearch">
         <UiInput
           v-model="query.keyword"
@@ -11,7 +14,9 @@
         />
         <template #actions>
           <UiButton native-type="submit">查询</UiButton>
-          <UiButton v-permission="'user:create'" type="primary">新建用户</UiButton>
+          <UiButton v-permission="'user:create'" type="primary"
+            >新建用户</UiButton
+          >
         </template>
       </AppSearchForm>
 
@@ -31,36 +36,36 @@
 </template>
 
 <script setup lang="ts">
-import { h, reactive } from 'vue';
+import { h, reactive } from 'vue'
 
-import AppCard from '@/shared/components/AppCard.vue';
-import AppDataTable from '@/shared/components/AppDataTable.vue';
-import AppSearchForm from '@/shared/components/AppSearchForm.vue';
-import AppStatusTag from '@/shared/components/AppStatusTag.vue';
-import type { AppDataTableColumn } from '@/shared/components/app-data-table';
-import { useLoading } from '@/shared/composables/use-loading';
-import { getErrorMessage } from '@/shared/request/client';
-import UiButton from '@/ui/primitives/UiButton.vue';
-import UiInput from '@/ui/primitives/UiInput.vue';
-import { uiMessage } from '@/ui/services/message';
+import AppCard from '@/shared/components/AppCard.vue'
+import AppDataTable from '@/shared/components/AppDataTable.vue'
+import AppSearchForm from '@/shared/components/AppSearchForm.vue'
+import AppStatusTag from '@/shared/components/AppStatusTag.vue'
+import type { AppDataTableColumn } from '@/shared/components/app-data-table'
+import { useLoading } from '@/shared/composables/use-loading'
+import { getErrorMessage } from '@/shared/request/client'
+import UiButton from '@/ui/primitives/UiButton.vue'
+import UiInput from '@/ui/primitives/UiInput.vue'
+import { uiMessage } from '@/ui/services/message'
 
-import { fetchSystemUsers } from '../api';
-import type { SystemUser, SystemUserPageResult } from '../types';
+import { fetchSystemUsers } from '../api'
+import type { SystemUser, SystemUserPageResult } from '../types'
 
 const query = reactive({
   page: 1,
   pageSize: 10,
   keyword: ''
-});
+})
 
 const tableData = reactive<SystemUserPageResult>({
   list: [],
   total: 0,
   page: 1,
   pageSize: 10
-});
+})
 
-const { loading, withLoading } = useLoading();
+const { loading, withLoading } = useLoading()
 const columns: AppDataTableColumn<SystemUser>[] = [
   { key: 'name', title: '姓名', minWidth: 120 },
   { key: 'role', title: '角色', minWidth: 120 },
@@ -71,28 +76,28 @@ const columns: AppDataTableColumn<SystemUser>[] = [
     width: 120,
     render: (row) => h(AppStatusTag, { status: row.status })
   }
-];
+]
 
 async function loadUsers() {
   try {
-    const payload = await withLoading(() => fetchSystemUsers(query));
-    Object.assign(tableData, payload);
+    const payload = await withLoading(() => fetchSystemUsers(query))
+    Object.assign(tableData, payload)
   } catch (error) {
-    uiMessage.error(getErrorMessage(error, '查询失败'));
+    uiMessage.error(getErrorMessage(error, '查询失败'))
   }
 }
 
 async function handleSearch() {
-  query.page = 1;
-  await loadUsers();
+  query.page = 1
+  await loadUsers()
 }
 
 async function handlePageChange(page: number) {
-  query.page = page;
-  await loadUsers();
+  query.page = page
+  await loadUsers()
 }
 
-loadUsers();
+loadUsers()
 </script>
 
 <style scoped lang="scss">

@@ -1,7 +1,7 @@
-import { defineStore } from 'pinia';
+import { defineStore } from 'pinia'
 
-import { fetchDashboardOverview } from './api';
-import type { DashboardOverview } from './types';
+import { fetchDashboardOverview } from './api'
+import type { DashboardOverview } from './types'
 
 export const useDashboardStore = defineStore('dashboard', {
   state: () => ({
@@ -9,7 +9,7 @@ export const useDashboardStore = defineStore('dashboard', {
   }),
   actions: {
     async fetchOverview() {
-      this.overview = await fetchDashboardOverview();
+      this.overview = await fetchDashboardOverview()
     }
   }
-});
+})

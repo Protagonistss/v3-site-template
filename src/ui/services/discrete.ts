@@ -1,47 +1,47 @@
-import { createDiscreteApi } from 'naive-ui';
+import { createDiscreteApi } from 'naive-ui'
 
-import { pinia } from '@/stores';
-import { useThemeStore } from '@/stores/theme';
-import { createUiThemeOverrides } from '@/ui/provider/theme';
+import { pinia } from '@/stores'
+import { useThemeStore } from '@/stores/theme'
+import { createUiThemeOverrides } from '@/ui/provider/theme'
 
 type ThemedDiscreteApi = Pick<
   ReturnType<typeof createDiscreteApi>,
   'message' | 'dialog' | 'loadingBar'
->;
+>
 
-let cachedThemeKey = '';
-let cachedDiscreteApi: ThemedDiscreteApi | null = null;
+let cachedThemeKey = ''
+let cachedDiscreteApi: ThemedDiscreteApi | null = null
 
 function getThemedDiscreteApi(): ThemedDiscreteApi {
-  const themeStore = useThemeStore(pinia);
-  const nextThemeKey = `${themeStore.brand}:${themeStore.mode}`;
+  const themeStore = useThemeStore(pinia)
+  const nextThemeKey = `${themeStore.brand}:${themeStore.mode}`
 
   if (cachedDiscreteApi && cachedThemeKey === nextThemeKey) {
-    return cachedDiscreteApi;
+    return cachedDiscreteApi
   }
 
-  cachedThemeKey = nextThemeKey;
+  cachedThemeKey = nextThemeKey
   cachedDiscreteApi = createDiscreteApi(['message', 'dialog', 'loadingBar'], {
     configProviderProps: {
       themeOverrides: createUiThemeOverrides(themeStore.resolvedTokens)
     }
-  });
+  })
 
-  return cachedDiscreteApi;
+  return cachedDiscreteApi
 }
 
 export function getDiscreteApi() {
-  return getThemedDiscreteApi();
+  return getThemedDiscreteApi()
 }
 
 export function getMessageApi() {
-  return getThemedDiscreteApi().message;
+  return getThemedDiscreteApi().message
 }
 
 export function getDialogApi() {
-  return getThemedDiscreteApi().dialog;
+  return getThemedDiscreteApi().dialog
 }
 
 export function getLoadingBarApi() {
-  return getThemedDiscreteApi().loadingBar;
+  return getThemedDiscreteApi().loadingBar
 }

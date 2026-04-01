@@ -26,36 +26,38 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
-import { useAppStore } from '@/stores/app';
-import { useAuthStore } from '@/stores/auth';
-import UiButton from '@/ui/primitives/UiButton.vue';
-import UiDropdown from '@/ui/primitives/UiDropdown.vue';
-import type { UiDropdownOption } from '@/ui/types/dropdown';
+import { useAppStore } from '@/stores/app'
+import { useAuthStore } from '@/stores/auth'
+import UiButton from '@/ui/primitives/UiButton.vue'
+import UiDropdown from '@/ui/primitives/UiDropdown.vue'
+import type { UiDropdownOption } from '@/ui/types/dropdown'
 
-import ThemeSwitcher from './ThemeSwitcher.vue';
+import ThemeSwitcher from './ThemeSwitcher.vue'
 
-const appStore = useAppStore();
-const authStore = useAuthStore();
-const route = useRoute();
-const router = useRouter();
+const appStore = useAppStore()
+const authStore = useAuthStore()
+const route = useRoute()
+const router = useRouter()
 
-const pageTitle = computed(() => route.meta.title ?? '工作台');
-const userInitial = computed(() => authStore.userInfo?.avatar ?? 'A');
-const userMenuOptions: UiDropdownOption[] = [{ label: '退出登录', key: 'logout' }];
+const pageTitle = computed(() => route.meta.title ?? '工作台')
+const userInitial = computed(() => authStore.userInfo?.avatar ?? 'A')
+const userMenuOptions: UiDropdownOption[] = [
+  { label: '退出登录', key: 'logout' }
+]
 
 async function handleLogout() {
-  await authStore.logout(router);
+  await authStore.logout(router)
 }
 
 async function handleMenuSelect(key: string) {
   if (key !== 'logout') {
-    return;
+    return
   }
 
-  await handleLogout();
+  await handleLogout()
 }
 </script>
 

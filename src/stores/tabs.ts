@@ -1,10 +1,10 @@
-import { defineStore } from 'pinia';
-import type { RouteLocationNormalizedLoaded } from 'vue-router';
+import { defineStore } from 'pinia'
+import type { RouteLocationNormalizedLoaded } from 'vue-router'
 
 export interface VisitedTab {
-  path: string;
-  fullPath: string;
-  title: string;
+  path: string
+  fullPath: string
+  title: string
 }
 
 export const useTabsStore = defineStore('tabs', {
@@ -14,24 +14,26 @@ export const useTabsStore = defineStore('tabs', {
   actions: {
     addTab(route: RouteLocationNormalizedLoaded) {
       if (route.meta.hidden || !route.meta.title) {
-        return;
+        return
       }
 
       if (this.visitedTabs.some((item) => item.fullPath === route.fullPath)) {
-        return;
+        return
       }
 
       this.visitedTabs.push({
         path: route.path,
         fullPath: route.fullPath,
         title: route.meta.title
-      });
+      })
     },
     removeTab(fullPath: string) {
-      this.visitedTabs = this.visitedTabs.filter((item) => item.fullPath !== fullPath);
+      this.visitedTabs = this.visitedTabs.filter(
+        (item) => item.fullPath !== fullPath
+      )
     },
     reset() {
-      this.visitedTabs = [];
+      this.visitedTabs = []
     }
   }
-});
+})

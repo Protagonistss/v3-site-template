@@ -1,6 +1,6 @@
-import type { ThemeBrandId, ThemeMode } from '@/theme/brand';
+import type { ThemeBrandId, ThemeMode } from '@/theme/brand'
 
-import { envConfig } from './env';
+import { envConfig } from './env'
 
 export const appConfig = {
   title: envConfig.title,
@@ -9,9 +9,9 @@ export const appConfig = {
   defaultThemeBrand: 'classic',
   defaultThemeMode: 'light'
 } as const satisfies {
-  title: string;
-  homePath: string;
-  loginPath: string;
-  defaultThemeBrand: ThemeBrandId;
-  defaultThemeMode: ThemeMode;
-};
+  title: string
+  homePath: string
+  loginPath: string
+  defaultThemeBrand: ThemeBrandId
+  defaultThemeMode: ThemeMode
+}

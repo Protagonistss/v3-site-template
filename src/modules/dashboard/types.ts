@@ -1,11 +1,11 @@
 export interface DashboardMetric {
-  title: string;
-  value: string;
-  trend: string;
-  tone: 'success' | 'warning' | 'primary';
+  title: string
+  value: string
+  trend: string
+  tone: 'success' | 'warning' | 'primary'
 }
 
 export interface DashboardOverview {
-  metrics: DashboardMetric[];
-  todos: string[];
+  metrics: DashboardMetric[]
+  todos: string[]
 }

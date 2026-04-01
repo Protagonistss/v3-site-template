@@ -3,9 +3,9 @@
 </template>
 
 <script setup lang="ts">
-import AppStatusTag from '@/shared/components/AppStatusTag.vue';
+import AppStatusTag from '@/shared/components/AppStatusTag.vue'
 
 defineProps<{
-  status: 'enabled' | 'disabled';
-}>();
+  status: 'enabled' | 'disabled'
+}>()
 </script>

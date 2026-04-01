@@ -1,8 +1,8 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router'
 
-import { staticRoutes } from './routes/static';
+import { staticRoutes } from './routes/static'
 
 export const router = createRouter({
   history: createWebHistory(),
   routes: staticRoutes
-});
+})

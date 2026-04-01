@@ -1,8 +1,8 @@
-import type { AppRouteRecordRaw } from '../types';
+import type { AppRouteRecordRaw } from '../types'
 
-import ForbiddenPage from '@/app/pages/ForbiddenPage.vue';
-import NotFoundPage from '@/app/pages/NotFoundPage.vue';
-import LoginPage from '@/modules/auth/pages/LoginPage.vue';
+import ForbiddenPage from '@/app/pages/ForbiddenPage.vue'
+import NotFoundPage from '@/app/pages/NotFoundPage.vue'
+import LoginPage from '@/modules/auth/pages/LoginPage.vue'
 
 export const staticRoutes: AppRouteRecordRaw[] = [
   {
@@ -50,4 +50,4 @@ export const staticRoutes: AppRouteRecordRaw[] = [
       hidden: true
     }
   }
-];
+]

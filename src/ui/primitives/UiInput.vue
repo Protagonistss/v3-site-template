@@ -10,20 +10,20 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { NInput } from 'naive-ui';
+import { computed } from 'vue'
+import { NInput } from 'naive-ui'
 
 defineOptions({
   inheritAttrs: false
-});
+})
 
 const props = withDefaults(
   defineProps<{
-    modelValue: string;
-    placeholder?: string;
-    clearable?: boolean;
-    type?: 'text' | 'password' | 'textarea';
-    showPassword?: boolean;
+    modelValue: string
+    placeholder?: string
+    clearable?: boolean
+    type?: 'text' | 'password' | 'textarea'
+    showPassword?: boolean
   }>(),
   {
     placeholder: '',
@@ -31,22 +31,22 @@ const props = withDefaults(
     type: 'text',
     showPassword: false
   }
-);
+)
 
 const emit = defineEmits<{
-  'update:modelValue': [value: string];
-}>();
+  'update:modelValue': [value: string]
+}>()
 
 const modelValueProxy = computed({
   get: () => props.modelValue,
   set: (value: string) => emit('update:modelValue', value)
-});
+})
 
 const resolvedType = computed(() => {
   if (props.showPassword) {
-    return 'password';
+    return 'password'
   }
 
-  return props.type;
-});
+  return props.type
+})
 </script>

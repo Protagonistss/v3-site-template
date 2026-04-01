@@ -1,4 +1,8 @@
-import type { LoginCommand, LoginResult, UserProfile } from '../src/modules/auth/types';
+import type {
+  LoginCommand,
+  LoginResult,
+  UserProfile
+} from '../src/modules/auth/types'
 
 const mockUsers: Array<UserProfile & { password: string; token: string }> = [
   {
@@ -19,10 +23,10 @@ const mockUsers: Array<UserProfile & { password: string; token: string }> = [
     roles: ['editor'],
     permissions: ['dashboard:view']
   }
-];
+]
 
 async function wait(delay = 200): Promise<void> {
-  await new Promise((resolve) => setTimeout(resolve, delay));
+  await new Promise((resolve) => setTimeout(resolve, delay))
 }
 
 function toUserProfile(
@@ -34,41 +38,41 @@ function toUserProfile(
     avatar: account.avatar,
     roles: [...account.roles],
     permissions: [...account.permissions]
-  };
+  }
 }
 
 export async function mockLogin(payload: LoginCommand): Promise<LoginResult> {
-  await wait();
+  await wait()
 
   const matchedUser = mockUsers.find((item) => {
-    const accountAlias = item.roles.includes('admin') ? 'admin' : 'editor';
+    const accountAlias = item.roles.includes('admin') ? 'admin' : 'editor'
 
     return (
       item.id === payload.username ||
       payload.username === item.roles[0] ||
       payload.username === item.name.toLowerCase() ||
       payload.username === accountAlias
-    );
-  });
+    )
+  })
 
   if (!matchedUser || matchedUser.password !== payload.password) {
-    throw new Error('账号或密码错误');
+    throw new Error('账号或密码错误')
   }
 
   return {
     token: matchedUser.token,
     userInfo: toUserProfile(matchedUser)
-  };
+  }
 }
 
 export async function mockFetchProfile(token: string): Promise<UserProfile> {
-  await wait(120);
+  await wait(120)
 
-  const matchedUser = mockUsers.find((item) => item.token === token);
+  const matchedUser = mockUsers.find((item) => item.token === token)
 
   if (!matchedUser) {
-    throw new Error('登录态已过期');
+    throw new Error('登录态已过期')
   }
 
-  return toUserProfile(matchedUser);
+  return toUserProfile(matchedUser)
 }

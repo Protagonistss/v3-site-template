@@ -1,5 +1,5 @@
 export interface UiDropdownOption {
-  label: string;
-  key: string;
-  disabled?: boolean;
+  label: string
+  key: string
+  disabled?: boolean
 }

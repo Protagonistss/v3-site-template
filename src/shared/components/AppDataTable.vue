@@ -1,6 +1,11 @@
 <template>
   <div class="app-data-table">
-    <UiDataTable :columns="columns" :data="data" :loading="loading" :row-key="rowKey" />
+    <UiDataTable
+      :columns="columns"
+      :data="data"
+      :loading="loading"
+      :row-key="rowKey"
+    />
     <div v-if="pagination" class="app-data-table__pagination">
       <UiPagination
         :page="pagination.page"
@@ -13,25 +18,25 @@
 </template>
 
 <script setup lang="ts" generic="Row extends Record<string, unknown>">
-import UiDataTable from '@/ui/primitives/UiDataTable.vue';
-import UiPagination from '@/ui/primitives/UiPagination.vue';
-import type { UiDataTableColumn } from '@/ui/types/table';
+import UiDataTable from '@/ui/primitives/UiDataTable.vue'
+import UiPagination from '@/ui/primitives/UiPagination.vue'
+import type { UiDataTableColumn } from '@/ui/types/table'
 
 defineProps<{
-  columns: UiDataTableColumn<Row>[];
-  data: Row[];
-  loading?: boolean;
-  rowKey?: keyof Row | ((row: Row) => string | number);
+  columns: UiDataTableColumn<Row>[]
+  data: Row[]
+  loading?: boolean
+  rowKey?: keyof Row | ((row: Row) => string | number)
   pagination?: {
-    page: number;
-    pageSize: number;
-    total: number;
-  };
-}>();
+    page: number
+    pageSize: number
+    total: number
+  }
+}>()
 
 const emit = defineEmits<{
-  'page-change': [page: number];
-}>();
+  'page-change': [page: number]
+}>()
 </script>
 
 <style scoped lang="scss">

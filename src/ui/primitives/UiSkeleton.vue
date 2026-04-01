@@ -8,17 +8,17 @@
 </template>
 
 <script setup lang="ts">
-import { NSkeleton } from 'naive-ui';
+import { NSkeleton } from 'naive-ui'
 
 withDefaults(
   defineProps<{
-    loading: boolean;
-    rows?: number;
+    loading: boolean
+    rows?: number
   }>(),
   {
     rows: 3
   }
-);
+)
 </script>
 
 <style scoped lang="scss">

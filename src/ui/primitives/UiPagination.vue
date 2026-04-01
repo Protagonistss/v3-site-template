@@ -8,15 +8,15 @@
 </template>
 
 <script setup lang="ts">
-import { NPagination } from 'naive-ui';
+import { NPagination } from 'naive-ui'
 
 defineProps<{
-  page: number;
-  pageSize: number;
-  total: number;
-}>();
+  page: number
+  pageSize: number
+  total: number
+}>()
 
 const emit = defineEmits<{
-  'update:page': [page: number];
-}>();
+  'update:page': [page: number]
+}>()
 </script>

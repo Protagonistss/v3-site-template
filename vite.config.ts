@@ -1,13 +1,13 @@
-import { defineConfig, loadEnv } from 'vite';
-import { fileURLToPath, URL } from 'node:url';
+import { defineConfig, loadEnv } from 'vite'
+import { fileURLToPath, URL } from 'node:url'
 
-import { createProxy } from './build/vite/proxy';
-import { readAppEnv } from './build/vite/env';
-import { createVitePlugins } from './build/vite/plugins';
+import { createProxy } from './build/vite/proxy'
+import { readAppEnv } from './build/vite/env'
+import { createVitePlugins } from './build/vite/plugins'
 
 export default defineConfig(({ mode }) => {
-  const viteEnv = loadEnv(mode, process.cwd(), '');
-  const appEnv = readAppEnv(viteEnv);
+  const viteEnv = loadEnv(mode, process.cwd(), '')
+  const appEnv = readAppEnv(viteEnv)
 
   return {
     plugins: createVitePlugins(),
@@ -24,8 +24,12 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           manualChunks(id) {
-            if (id.includes('node_modules/vue/') || id.includes('node_modules/vue-router/') || id.includes('node_modules/pinia/')) {
-              return 'framework';
+            if (
+              id.includes('node_modules/vue/') ||
+              id.includes('node_modules/vue-router/') ||
+              id.includes('node_modules/pinia/')
+            ) {
+              return 'framework'
             }
 
             if (
@@ -39,12 +43,17 @@ export default defineConfig(({ mode }) => {
               id.includes('node_modules/css-render/') ||
               id.includes('node_modules/@css-render/')
             ) {
-              return 'ui';
+              return 'ui'
             }
 
-            if (id.includes('node_modules/axios/') || id.includes('node_modules/nprogress/')) {
-              return 'vendor';
+            if (
+              id.includes('node_modules/axios/') ||
+              id.includes('node_modules/nprogress/')
+            ) {
+              return 'vendor'
             }
+
+            return undefined
           }
         }
       }
@@ -52,5 +61,5 @@ export default defineConfig(({ mode }) => {
     preview: {
       port: 4173
     }
-  };
-});
+  }
+})

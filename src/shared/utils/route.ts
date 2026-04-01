@@ -1,15 +1,15 @@
-import type { AppRouteRecordRaw } from '@/router/types';
+import type { AppRouteRecordRaw } from '@/router/types'
 
 export function resolveRoutePath(parentPath: string, childPath = ''): string {
   if (!childPath) {
-    return parentPath;
+    return parentPath
   }
 
   if (childPath.startsWith('/')) {
-    return childPath;
+    return childPath
   }
 
-  return `${parentPath.replace(/\/$/, '')}/${childPath}`.replace(/\/{2,}/g, '/');
+  return `${parentPath.replace(/\/$/, '')}/${childPath}`.replace(/\/{2,}/g, '/')
 }
 
 export function hasKnownRoutePath(
@@ -20,16 +20,16 @@ export function hasKnownRoutePath(
   return routes.some((route) => {
     const currentPath = route.path.startsWith('/')
       ? route.path
-      : resolveRoutePath(parentPath, route.path);
+      : resolveRoutePath(parentPath, route.path)
 
     if (currentPath === targetPath) {
-      return true;
+      return true
     }
 
     if (!route.children?.length) {
-      return false;
+      return false
     }
 
-    return hasKnownRoutePath(route.children, targetPath, currentPath);
-  });
+    return hasKnownRoutePath(route.children, targetPath, currentPath)
+  })
 }

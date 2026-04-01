@@ -1,10 +1,12 @@
-import type { ProxyOptions } from 'vite';
+import type { ProxyOptions } from 'vite'
 
-import type { AppEnv } from './env';
+import type { AppEnv } from './env'
 
-export function createProxy(env: AppEnv): Record<string, ProxyOptions> | undefined {
+export function createProxy(
+  env: AppEnv
+): Record<string, ProxyOptions> | undefined {
   if (env.enableMock || !env.apiBaseUrl.startsWith('http')) {
-    return undefined;
+    return undefined
   }
 
   return {
@@ -13,5 +15,5 @@ export function createProxy(env: AppEnv): Record<string, ProxyOptions> | undefin
       changeOrigin: true,
       rewrite: (path) => path.replace(/^\/api/, '')
     }
-  };
+  }
 }

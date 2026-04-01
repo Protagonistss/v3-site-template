@@ -1,5 +1,8 @@
-import type { PageQuery } from '../src/shared/request/types';
-import type { SystemUser, SystemUserPageResult } from '../src/modules/system-user/types';
+import type { PageQuery } from '../src/shared/request/types'
+import type {
+  SystemUser,
+  SystemUserPageResult
+} from '../src/modules/system-user/types'
 
 const users: SystemUser[] = [
   {
@@ -23,33 +26,35 @@ const users: SystemUser[] = [
     email: 'zhouyue@example.com',
     status: 'disabled'
   }
-];
+]
 
 async function wait(delay = 180): Promise<void> {
-  await new Promise((resolve) => setTimeout(resolve, delay));
+  await new Promise((resolve) => setTimeout(resolve, delay))
 }
 
-export async function mockFetchUsers(query: PageQuery): Promise<SystemUserPageResult> {
-  await wait();
+export async function mockFetchUsers(
+  query: PageQuery
+): Promise<SystemUserPageResult> {
+  await wait()
 
-  const keyword = query.keyword?.trim().toLowerCase();
+  const keyword = query.keyword?.trim().toLowerCase()
   const filtered = keyword
     ? users.filter((item) => {
         return (
           item.name.toLowerCase().includes(keyword) ||
           item.email.toLowerCase().includes(keyword) ||
           item.role.toLowerCase().includes(keyword)
-        );
+        )
       })
-    : users;
+    : users
 
-  const start = (query.page - 1) * query.pageSize;
-  const end = start + query.pageSize;
+  const start = (query.page - 1) * query.pageSize
+  const end = start + query.pageSize
 
   return {
     list: filtered.slice(start, end),
     total: filtered.length,
     page: query.page,
     pageSize: query.pageSize
-  };
+  }
 }

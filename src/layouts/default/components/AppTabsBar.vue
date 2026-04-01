@@ -15,25 +15,25 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router'
 
-import { appConfig } from '@/config/app';
-import { useTabsStore } from '@/stores/tabs';
-import UiTag from '@/ui/primitives/UiTag.vue';
+import { appConfig } from '@/config/app'
+import { useTabsStore } from '@/stores/tabs'
+import UiTag from '@/ui/primitives/UiTag.vue'
 
-const route = useRoute();
-const router = useRouter();
-const tabsStore = useTabsStore();
+const route = useRoute()
+const router = useRouter()
+const tabsStore = useTabsStore()
 
 async function handleClose(fullPath: string) {
-  tabsStore.removeTab(fullPath);
+  tabsStore.removeTab(fullPath)
 
   if (route.fullPath !== fullPath) {
-    return;
+    return
   }
 
-  const fallback = tabsStore.visitedTabs[tabsStore.visitedTabs.length - 1];
-  await router.push(fallback?.fullPath ?? appConfig.homePath);
+  const fallback = tabsStore.visitedTabs[tabsStore.visitedTabs.length - 1]
+  await router.push(fallback?.fullPath ?? appConfig.homePath)
 }
 </script>
 

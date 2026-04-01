@@ -8,9 +8,9 @@
 </template>
 
 <script setup lang="ts">
-import { NPopover } from 'naive-ui';
+import { NPopover } from 'naive-ui'
 
 defineOptions({
   inheritAttrs: false
-});
+})
 </script>

@@ -1,8 +1,10 @@
-import type { GlobalThemeOverrides } from 'naive-ui';
+import type { GlobalThemeOverrides } from 'naive-ui'
 
-import type { ThemeTokens } from '@/theme/brand';
+import type { ThemeTokens } from '@/theme/brand'
 
-export function createUiThemeOverrides(theme: ThemeTokens): GlobalThemeOverrides {
+export function createUiThemeOverrides(
+  theme: ThemeTokens
+): GlobalThemeOverrides {
   return {
     common: {
       primaryColor: theme.color.primary,
@@ -45,5 +47,5 @@ export function createUiThemeOverrides(theme: ThemeTokens): GlobalThemeOverrides
     Tag: {
       borderRadius: theme.radius.pill
     }
-  };
+  }
 }

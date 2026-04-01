@@ -11,8 +11,8 @@
 
 <script setup lang="ts">
 const emit = defineEmits<{
-  submit: [];
-}>();
+  submit: []
+}>()
 </script>
 
 <style scoped lang="scss">

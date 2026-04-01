@@ -1,11 +1,11 @@
-import type { DashboardOverview } from '../src/modules/dashboard/types';
+import type { DashboardOverview } from '../src/modules/dashboard/types'
 
 async function wait(delay = 180): Promise<void> {
-  await new Promise((resolve) => setTimeout(resolve, delay));
+  await new Promise((resolve) => setTimeout(resolve, delay))
 }
 
 export async function mockFetchDashboardOverview(): Promise<DashboardOverview> {
-  await wait();
+  await wait()
 
   return {
     metrics: [
@@ -29,5 +29,5 @@ export async function mockFetchDashboardOverview(): Promise<DashboardOverview> {
       }
     ],
     todos: ['检查上线审批流', '复核 2 个异常报警', '确认四月活动排期']
-  };
+  }
 }

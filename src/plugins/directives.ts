@@ -1,7 +1,7 @@
-import type { App } from 'vue';
+import type { App } from 'vue'
 
-import { setupPermissionDirective } from '@/shared/directives/permission';
+import { setupPermissionDirective } from '@/shared/directives/permission'
 
 export function setupDirectives(app: App): void {
-  setupPermissionDirective(app);
+  setupPermissionDirective(app)
 }

@@ -17,7 +17,13 @@
           <button
             v-for="option in brandOptions"
             :key="option.value"
-            :class="['theme-switcher__option', { 'theme-switcher__option--active': themeStore.brand === option.value }]"
+            :class="[
+              'theme-switcher__option',
+              {
+                'theme-switcher__option--active':
+                  themeStore.brand === option.value
+              }
+            ]"
             type="button"
             @click="themeStore.setBrand(option.value)"
           >
@@ -36,7 +42,13 @@
           <button
             v-for="option in modeOptions"
             :key="option.value"
-            :class="['theme-switcher__option', { 'theme-switcher__option--active': themeStore.mode === option.value }]"
+            :class="[
+              'theme-switcher__option',
+              {
+                'theme-switcher__option--active':
+                  themeStore.mode === option.value
+              }
+            ]"
             type="button"
             @click="themeStore.setMode(option.value)"
           >
@@ -50,19 +62,19 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed } from 'vue'
 
-import { useThemeStore } from '@/stores/theme';
-import UiPopover from '@/ui/primitives/UiPopover.vue';
-import type { ThemeBrandId, ThemeMode } from '@/theme/brand';
+import { useThemeStore } from '@/stores/theme'
+import UiPopover from '@/ui/primitives/UiPopover.vue'
+import type { ThemeBrandId, ThemeMode } from '@/theme/brand'
 
 type ThemeOption<T> = {
-  label: string;
-  description: string;
-  value: T;
-};
+  label: string
+  description: string
+  value: T
+}
 
-const themeStore = useThemeStore();
+const themeStore = useThemeStore()
 
 const brandOptions: ThemeOption<ThemeBrandId>[] = [
   {
@@ -75,7 +87,7 @@ const brandOptions: ThemeOption<ThemeBrandId>[] = [
     description: '更冷感、更科技导向的品牌方向',
     value: 'aurora'
   }
-];
+]
 
 const modeOptions: ThemeOption<ThemeMode>[] = [
   {
@@ -88,15 +100,21 @@ const modeOptions: ThemeOption<ThemeMode>[] = [
     description: '适合低亮度或长时间使用',
     value: 'dark'
   }
-];
+]
 
 const brandLabel = computed(
-  () => brandOptions.find((option) => option.value === themeStore.brand)?.label ?? '经典蓝'
-);
+  () =>
+    brandOptions.find((option) => option.value === themeStore.brand)?.label ??
+    '经典蓝'
+)
 const modeLabel = computed(
-  () => modeOptions.find((option) => option.value === themeStore.mode)?.label ?? '浅色'
-);
-const currentThemeLabel = computed(() => `${brandLabel.value} · ${modeLabel.value}`);
+  () =>
+    modeOptions.find((option) => option.value === themeStore.mode)?.label ??
+    '浅色'
+)
+const currentThemeLabel = computed(
+  () => `${brandLabel.value} · ${modeLabel.value}`
+)
 </script>
 
 <style scoped lang="scss">

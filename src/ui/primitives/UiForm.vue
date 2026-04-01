@@ -12,45 +12,47 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import { NForm } from 'naive-ui';
-import type { FormInst, FormRules } from 'naive-ui';
+import { computed, ref } from 'vue'
+import { NForm } from 'naive-ui'
+import type { FormInst, FormRules } from 'naive-ui'
 
-import type { UiFormInstance, UiFormRules } from '@/ui/types/form';
+import type { UiFormInstance, UiFormRules } from '@/ui/types/form'
 
 const props = withDefaults(
   defineProps<{
-    model: Record<string, unknown>;
-    rules?: UiFormRules<Record<string, unknown>>;
-    labelPosition?: 'top' | 'left';
+    model: Record<string, unknown>
+    rules?: UiFormRules<Record<string, unknown>>
+    labelPosition?: 'top' | 'left'
   }>(),
   {
     rules: () => ({}),
     labelPosition: 'top'
   }
-);
+)
 
 const emit = defineEmits<{
-  submit: [event: Event];
-}>();
+  submit: [event: Event]
+}>()
 
-const formRef = ref<FormInst | null>(null);
+const formRef = ref<FormInst | null>(null)
 
-const labelPlacement = computed(() => (props.labelPosition === 'top' ? 'top' : 'left'));
-const resolvedRules = computed(() => props.rules as FormRules);
+const labelPlacement = computed(() =>
+  props.labelPosition === 'top' ? 'top' : 'left'
+)
+const resolvedRules = computed(() => props.rules as FormRules)
 
 function handleSubmit(event: Event) {
-  event.preventDefault();
-  emit('submit', event);
+  event.preventDefault()
+  emit('submit', event)
 }
 
 async function validate() {
-  await formRef.value?.validate();
+  await formRef.value?.validate()
 }
 
 defineExpose<UiFormInstance>({
   validate
-});
+})
 </script>
 
 <style scoped lang="scss">

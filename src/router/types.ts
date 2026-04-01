@@ -1,20 +1,20 @@
-import type { RouteMeta, RouteRecordRaw } from 'vue-router';
+import type { RouteMeta, RouteRecordRaw } from 'vue-router'
 
 export interface AppRouteMeta {
-  title: string;
-  icon?: string;
-  roles?: string[];
-  permissions?: string[];
-  hidden?: boolean;
-  keepAlive?: boolean;
-  order?: number;
+  title: string
+  icon?: string
+  roles?: string[]
+  permissions?: string[]
+  hidden?: boolean
+  keepAlive?: boolean
+  order?: number
 }
 
 export type AppRouteRecordRaw = RouteRecordRaw & {
-  name: string;
-  meta: AppRouteMeta;
-  children?: AppRouteRecordRaw[];
-};
+  name: string
+  meta: AppRouteMeta
+  children?: AppRouteRecordRaw[]
+}
 
 declare module 'vue-router' {
   // RouteMeta is intentionally augmented with the shared app-specific fields.
@@ -23,8 +23,8 @@ declare module 'vue-router' {
 }
 
 export type AppRouteAccessSubject = {
-  roles: string[];
-  permissions: string[];
-};
+  roles: string[]
+  permissions: string[]
+}
 
-export type AppRouteMetaLike = Partial<RouteMeta> | undefined;
+export type AppRouteMetaLike = Partial<RouteMeta> | undefined

@@ -5,10 +5,22 @@
     </div>
 
     <div class="login-page__panel">
-      <AppCard title="欢迎回来" description="使用 Mock 账号即可直接进入后台示例。">
-        <UiForm ref="formRef" :model="formState" :rules="rules" label-position="top" @submit="handleSubmit">
+      <AppCard
+        title="欢迎回来"
+        description="使用 Mock 账号即可直接进入后台示例。"
+      >
+        <UiForm
+          ref="formRef"
+          :model="formState"
+          :rules="rules"
+          label-position="top"
+          @submit="handleSubmit"
+        >
           <UiFormItem label="账号" path="username">
-            <UiInput v-model="formState.username" placeholder="admin / editor" />
+            <UiInput
+              v-model="formState.username"
+              placeholder="admin / editor"
+            />
           </UiFormItem>
 
           <UiFormItem label="密码" path="password">
@@ -40,64 +52,65 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { reactive, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
-import { appConfig } from '@/config/app';
-import AppCard from '@/shared/components/AppCard.vue';
-import { useLoading } from '@/shared/composables/use-loading';
-import { useAuthStore } from '@/stores/auth';
-import UiButton from '@/ui/primitives/UiButton.vue';
-import UiForm from '@/ui/primitives/UiForm.vue';
-import UiFormItem from '@/ui/primitives/UiFormItem.vue';
-import UiInput from '@/ui/primitives/UiInput.vue';
-import type { UiFormInstance, UiFormRules } from '@/ui/types/form';
-import { getErrorMessage } from '@/shared/request/client';
-import { uiMessage } from '@/ui/services/message';
+import { appConfig } from '@/config/app'
+import AppCard from '@/shared/components/AppCard.vue'
+import { useLoading } from '@/shared/composables/use-loading'
+import { useAuthStore } from '@/stores/auth'
+import UiButton from '@/ui/primitives/UiButton.vue'
+import UiForm from '@/ui/primitives/UiForm.vue'
+import UiFormItem from '@/ui/primitives/UiFormItem.vue'
+import UiInput from '@/ui/primitives/UiInput.vue'
+import type { UiFormInstance, UiFormRules } from '@/ui/types/form'
+import { getErrorMessage } from '@/shared/request/client'
+import { uiMessage } from '@/ui/services/message'
 
-import LoginHero from '../components/LoginHero.vue';
+import LoginHero from '../components/LoginHero.vue'
 
 type LoginFormState = {
-  username: string;
-  password: string;
-};
+  username: string
+  password: string
+}
 
-const authStore = useAuthStore();
-const route = useRoute();
-const router = useRouter();
-const formRef = ref<UiFormInstance | null>(null);
-const { loading, withLoading } = useLoading();
+const authStore = useAuthStore()
+const route = useRoute()
+const router = useRouter()
+const formRef = ref<UiFormInstance | null>(null)
+const { loading, withLoading } = useLoading()
 
 const formState = reactive<LoginFormState>({
   username: 'admin',
   password: '123456'
-});
+})
 
 const rules: UiFormRules<LoginFormState> = {
   username: [{ required: true, message: '请输入账号', trigger: 'blur' }],
   password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
-};
+}
 
 async function handleSubmit() {
   try {
-    await formRef.value?.validate();
+    await formRef.value?.validate()
   } catch {
-    return;
+    return
   }
 
   try {
     await withLoading(async () => {
-      await authStore.login(formState);
-      await authStore.ensureRoutes(router);
+      await authStore.login(formState)
+      await authStore.ensureRoutes(router)
 
-      const redirect = route.query.redirect;
-      const nextPath = typeof redirect === 'string' ? redirect : appConfig.homePath;
-      await router.replace(nextPath);
-    });
+      const redirect = route.query.redirect
+      const nextPath =
+        typeof redirect === 'string' ? redirect : appConfig.homePath
+      await router.replace(nextPath)
+    })
 
-    uiMessage.success('登录成功');
+    uiMessage.success('登录成功')
   } catch (error) {
-    uiMessage.error(getErrorMessage(error, '登录失败'));
+    uiMessage.error(getErrorMessage(error, '登录失败'))
   }
 }
 </script>

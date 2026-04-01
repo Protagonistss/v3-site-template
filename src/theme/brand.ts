@@ -1,63 +1,63 @@
-export type ThemeBrandId = 'classic' | 'aurora';
-export type ThemeMode = 'light' | 'dark';
+export type ThemeBrandId = 'classic' | 'aurora'
+export type ThemeMode = 'light' | 'dark'
 
 export interface ThemePreference {
-  brand: ThemeBrandId;
-  mode: ThemeMode;
+  brand: ThemeBrandId
+  mode: ThemeMode
 }
 
 export interface ThemeTokens {
   font: {
-    sans: string;
-  };
+    sans: string
+  }
   color: {
-    primary: string;
-    primaryHover: string;
-    primaryPressed: string;
-    primaryAccent: string;
-    primarySoft: string;
-    success: string;
-    warning: string;
-    error: string;
-    info: string;
-    infoHover: string;
-    infoPressed: string;
-    textPrimary: string;
-    textSecondary: string;
-    textContrast: string;
-    textContrastSecondary: string;
-    border: string;
-    contrastBorder: string;
-    surface: string;
-    surfaceStrong: string;
-    surfaceElevated: string;
-    surfaceContrast: string;
-    sidebarBg: string;
-    sidebarText: string;
-    sidebarHover: string;
-  };
+    primary: string
+    primaryHover: string
+    primaryPressed: string
+    primaryAccent: string
+    primarySoft: string
+    success: string
+    warning: string
+    error: string
+    info: string
+    infoHover: string
+    infoPressed: string
+    textPrimary: string
+    textSecondary: string
+    textContrast: string
+    textContrastSecondary: string
+    border: string
+    contrastBorder: string
+    surface: string
+    surfaceStrong: string
+    surfaceElevated: string
+    surfaceContrast: string
+    sidebarBg: string
+    sidebarText: string
+    sidebarHover: string
+  }
   shadow: {
-    soft: string;
-    card: string;
-    elevated: string;
-  };
+    soft: string
+    card: string
+    elevated: string
+  }
   radius: {
-    sm: string;
-    md: string;
-    lg: string;
-    xl: string;
-    pill: string;
-  };
+    sm: string
+    md: string
+    lg: string
+    xl: string
+    pill: string
+  }
   gradient: {
-    loginShell: string;
-    layoutShell: string;
-    forbiddenShell: string;
-    notFoundShell: string;
-  };
+    loginShell: string
+    layoutShell: string
+    forbiddenShell: string
+    notFoundShell: string
+  }
 }
 
-export const THEME_BRANDS = ['classic', 'aurora'] as const;
-export const THEME_MODES = ['light', 'dark'] as const;
+export const THEME_BRANDS = ['classic', 'aurora'] as const
+export const THEME_MODES = ['light', 'dark'] as const
 
 const sharedThemeScales = {
   font: {
@@ -70,7 +70,7 @@ const sharedThemeScales = {
     xl: '24px',
     pill: '999px'
   }
-} as const satisfies Pick<ThemeTokens, 'font' | 'radius'>;
+} as const satisfies Pick<ThemeTokens, 'font' | 'radius'>
 
 const classicLightTheme: ThemeTokens = {
   ...sharedThemeScales,
@@ -115,7 +115,7 @@ const classicLightTheme: ThemeTokens = {
     notFoundShell:
       'radial-gradient(circle at top right, rgba(255, 122, 0, 0.18), transparent 35%), linear-gradient(180deg, #f7f8fc 0%, #eef2f8 100%)'
   }
-};
+}
 
 const classicDarkTheme: ThemeTokens = {
   ...sharedThemeScales,
@@ -160,7 +160,7 @@ const classicDarkTheme: ThemeTokens = {
     notFoundShell:
       'radial-gradient(circle at top right, rgba(251, 191, 36, 0.14), transparent 32%), linear-gradient(180deg, #020617 0%, #111827 100%)'
   }
-};
+}
 
 const auroraLightTheme: ThemeTokens = {
   ...sharedThemeScales,
@@ -205,7 +205,7 @@ const auroraLightTheme: ThemeTokens = {
     notFoundShell:
       'radial-gradient(circle at top right, rgba(45, 212, 191, 0.16), transparent 35%), linear-gradient(180deg, #f2fbf9 0%, #e4f4f0 100%)'
   }
-};
+}
 
 const auroraDarkTheme: ThemeTokens = {
   ...sharedThemeScales,
@@ -250,14 +250,17 @@ const auroraDarkTheme: ThemeTokens = {
     notFoundShell:
       'radial-gradient(circle at top right, rgba(251, 191, 36, 0.14), transparent 32%), linear-gradient(180deg, #021312 0%, #0a201d 100%)'
   }
-};
+}
 
 export const DEFAULT_THEME_PREFERENCE: ThemePreference = {
   brand: 'classic',
   mode: 'light'
-};
+}
 
-export const themeCatalog: Record<ThemeBrandId, Record<ThemeMode, ThemeTokens>> = {
+export const themeCatalog: Record<
+  ThemeBrandId,
+  Record<ThemeMode, ThemeTokens>
+> = {
   classic: {
     light: classicLightTheme,
     dark: classicDarkTheme
@@ -266,14 +269,20 @@ export const themeCatalog: Record<ThemeBrandId, Record<ThemeMode, ThemeTokens>> 
     light: auroraLightTheme,
     dark: auroraDarkTheme
   }
-};
+}
 
 export function isThemeBrandId(value: unknown): value is ThemeBrandId {
-  return typeof value === 'string' && (THEME_BRANDS as readonly string[]).includes(value);
+  return (
+    typeof value === 'string' &&
+    (THEME_BRANDS as readonly string[]).includes(value)
+  )
 }
 
 export function isThemeMode(value: unknown): value is ThemeMode {
-  return typeof value === 'string' && (THEME_MODES as readonly string[]).includes(value);
+  return (
+    typeof value === 'string' &&
+    (THEME_MODES as readonly string[]).includes(value)
+  )
 }
 
 export function normalizeThemePreference(
@@ -283,12 +292,12 @@ export function normalizeThemePreference(
   return {
     brand: isThemeBrandId(value?.brand) ? value.brand : fallback.brand,
     mode: isThemeMode(value?.mode) ? value.mode : fallback.mode
-  };
+  }
 }
 
 export function resolveThemeTokens(preference: ThemePreference): ThemeTokens {
-  const normalizedPreference = normalizeThemePreference(preference);
-  return themeCatalog[normalizedPreference.brand][normalizedPreference.mode];
+  const normalizedPreference = normalizeThemePreference(preference)
+  return themeCatalog[normalizedPreference.brand][normalizedPreference.mode]
 }
 
 export function createThemeCssVars(theme: ThemeTokens): Record<string, string> {
@@ -333,33 +342,37 @@ export function createThemeCssVars(theme: ThemeTokens): Record<string, string> {
     '--gradient-layout-shell': theme.gradient.layoutShell,
     '--gradient-forbidden-shell': theme.gradient.forbiddenShell,
     '--gradient-notfound-shell': theme.gradient.notFoundShell
-  };
+  }
 }
 
 export function applyThemeCssVars(
   theme: ThemeTokens,
-  target: HTMLElement | null = typeof document !== 'undefined' ? document.documentElement : null
+  target: HTMLElement | null = typeof document !== 'undefined'
+    ? document.documentElement
+    : null
 ): void {
   if (!target) {
-    return;
+    return
   }
 
   Object.entries(createThemeCssVars(theme)).forEach(([name, value]) => {
-    target.style.setProperty(name, value);
-  });
+    target.style.setProperty(name, value)
+  })
 }
 
 export function applyThemePreference(
   preference: ThemePreference,
-  target: HTMLElement | null = typeof document !== 'undefined' ? document.documentElement : null
+  target: HTMLElement | null = typeof document !== 'undefined'
+    ? document.documentElement
+    : null
 ): void {
   if (!target) {
-    return;
+    return
   }
 
-  const normalizedPreference = normalizeThemePreference(preference);
-  applyThemeCssVars(resolveThemeTokens(normalizedPreference), target);
-  target.dataset.themeBrand = normalizedPreference.brand;
-  target.dataset.themeMode = normalizedPreference.mode;
-  target.style.colorScheme = normalizedPreference.mode;
+  const normalizedPreference = normalizeThemePreference(preference)
+  applyThemeCssVars(resolveThemeTokens(normalizedPreference), target)
+  target.dataset.themeBrand = normalizedPreference.brand
+  target.dataset.themeMode = normalizedPreference.mode
+  target.style.colorScheme = normalizedPreference.mode
 }

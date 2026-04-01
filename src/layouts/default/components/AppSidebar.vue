@@ -1,5 +1,10 @@
 <template>
-  <aside :class="['app-sidebar', { 'app-sidebar--collapsed': appStore.sidebarCollapsed }]">
+  <aside
+    :class="[
+      'app-sidebar',
+      { 'app-sidebar--collapsed': appStore.sidebarCollapsed }
+    ]"
+  >
     <RouterLink class="app-sidebar__brand" to="/dashboard">
       <img :src="logoUrl" alt="logo" />
       <span v-show="!appStore.sidebarCollapsed">Admin Starter</span>
@@ -18,78 +23,81 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
-import logoUrl from '@/assets/logo-mark.svg';
-import type { AppRouteRecordRaw } from '@/router/types';
-import { resolveRoutePath } from '@/shared/utils/route';
-import { useAppStore } from '@/stores/app';
-import { useAuthStore } from '@/stores/auth';
-import UiMenu from '@/ui/primitives/UiMenu.vue';
-import UiScrollbar from '@/ui/primitives/UiScrollbar.vue';
-import type { UiMenuOption } from '@/ui/types/menu';
+import logoUrl from '@/assets/logo-mark.svg'
+import type { AppRouteRecordRaw } from '@/router/types'
+import { resolveRoutePath } from '@/shared/utils/route'
+import { useAppStore } from '@/stores/app'
+import { useAuthStore } from '@/stores/auth'
+import UiMenu from '@/ui/primitives/UiMenu.vue'
+import UiScrollbar from '@/ui/primitives/UiScrollbar.vue'
+import type { UiMenuOption } from '@/ui/types/menu'
 
-const route = useRoute();
-const router = useRouter();
-const appStore = useAppStore();
-const authStore = useAuthStore();
+const route = useRoute()
+const router = useRouter()
+const appStore = useAppStore()
+const authStore = useAuthStore()
 
 const menuOptions = computed(() =>
   authStore.menuRoutes
     .map((routeRecord) => createMenuOption(routeRecord))
     .filter((option): option is UiMenuOption => option !== null)
-);
+)
 
 const activeMenuKey = computed(() => {
-  const availableKeys = new Set(collectMenuKeys(menuOptions.value));
+  const availableKeys = new Set(collectMenuKeys(menuOptions.value))
   const matchedPath = [...route.matched]
     .map((record) => record.path)
     .reverse()
-    .find((path) => availableKeys.has(path));
+    .find((path) => availableKeys.has(path))
 
-  return matchedPath ?? route.path;
-});
+  return matchedPath ?? route.path
+})
 
 function createMenuOption(
   routeRecord: AppRouteRecordRaw,
   parentPath = ''
 ): UiMenuOption | null {
   if (routeRecord.meta.hidden) {
-    return null;
+    return null
   }
 
   const currentPath = routeRecord.path.startsWith('/')
     ? routeRecord.path
-    : resolveRoutePath(parentPath, routeRecord.path);
+    : resolveRoutePath(parentPath, routeRecord.path)
   const visibleChildren = ((routeRecord.children ?? []) as AppRouteRecordRaw[])
     .map((child) => createMenuOption(child, currentPath))
-    .filter((option): option is UiMenuOption => option !== null);
+    .filter((option): option is UiMenuOption => option !== null)
 
   if (visibleChildren.length <= 1) {
     return {
       key: visibleChildren[0]?.key ?? currentPath,
       label: routeRecord.meta.title
-    };
+    }
   }
 
   return {
     key: currentPath,
     label: routeRecord.meta.title,
     children: visibleChildren
-  };
+  }
 }
 
 function collectMenuKeys(options: UiMenuOption[]): string[] {
-  return options.flatMap((option) => [option.key, ...collectMenuKeys(option.children ?? [])]);
+  return options.flatMap((option) => [
+    option.key,
+    ...collectMenuKeys(option.children ?? [])
+  ])
 }
 
 async function handleSelect(key: string) {
   if (key === route.path) {
-    return;
+    return
   }
 
-  await router.push(key);
+  await router.push(key)
 }
 </script>
 

@@ -5,10 +5,10 @@
 </template>
 
 <script setup lang="ts">
-import { NFormItem } from 'naive-ui';
+import { NFormItem } from 'naive-ui'
 
 defineProps<{
-  label: string;
-  path: string;
-}>();
+  label: string
+  path: string
+}>()
 </script>

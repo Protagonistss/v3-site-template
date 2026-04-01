@@ -1,5 +1,4 @@
-import type { App } from 'vue';
-import type { ComponentPublicInstance } from 'vue';
+import type { App, ComponentPublicInstance } from 'vue'
 
 export function setupErrorHandler(app: App): void {
   app.config.errorHandler = (error, instance, info) => {
@@ -7,25 +6,29 @@ export function setupErrorHandler(app: App): void {
       error,
       info,
       component: resolveComponentName(instance)
-    });
-  };
+    })
+  }
 
   window.addEventListener('unhandledrejection', (event) => {
-    console.error('[UnhandledRejection]', event.reason);
-  });
+    console.error('[UnhandledRejection]', event.reason)
+  })
 }
 
-function resolveComponentName(instance: ComponentPublicInstance | null): string | undefined {
+function resolveComponentName(
+  instance: ComponentPublicInstance | null
+): string | undefined {
   if (!instance) {
-    return undefined;
+    return undefined
   }
 
-  const optionsName = instance.$options?.name;
+  const optionsName = instance.$options?.name
 
   if (typeof optionsName === 'string' && optionsName) {
-    return optionsName;
+    return optionsName
   }
 
-  const componentName = instance.$?.type?.name;
-  return typeof componentName === 'string' && componentName ? componentName : undefined;
+  const componentName = instance.$?.type?.name
+  return typeof componentName === 'string' && componentName
+    ? componentName
+    : undefined
 }

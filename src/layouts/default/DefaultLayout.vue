@@ -12,9 +12,9 @@
 </template>
 
 <script setup lang="ts">
-import AppHeader from './components/AppHeader.vue';
-import AppSidebar from './components/AppSidebar.vue';
-import AppTabsBar from './components/AppTabsBar.vue';
+import AppHeader from './components/AppHeader.vue'
+import AppSidebar from './components/AppSidebar.vue'
+import AppTabsBar from './components/AppTabsBar.vue'
 </script>
 
 <style scoped lang="scss">
