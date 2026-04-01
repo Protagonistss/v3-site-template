@@ -1,16 +1,16 @@
 <template>
   <div class="tabs-bar">
-    <el-tag
+    <UiTag
       v-for="tab in tabsStore.visitedTabs"
       :key="tab.fullPath"
-      :effect="tab.fullPath === route.fullPath ? 'dark' : 'plain'"
       :closable="tabsStore.visitedTabs.length > 1"
+      :selected="tab.fullPath === route.fullPath"
       class="tabs-bar__tag"
       @click="router.push(tab.fullPath)"
       @close="handleClose(tab.fullPath)"
     >
       {{ tab.title }}
-    </el-tag>
+    </UiTag>
   </div>
 </template>
 
@@ -19,6 +19,7 @@ import { useRoute, useRouter } from 'vue-router';
 
 import { appConfig } from '@/config/app';
 import { useTabsStore } from '@/stores/tabs';
+import UiTag from '@/ui/primitives/UiTag.vue';
 
 const route = useRoute();
 const router = useRouter();

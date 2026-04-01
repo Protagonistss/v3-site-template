@@ -1,56 +1,50 @@
 <template>
   <section class="system-user-page">
     <AppCard title="用户管理" description="业务模块内自带页面、API 和局部组件。">
-      <div class="system-user-page__toolbar">
-        <el-input
+      <AppSearchForm class="system-user-page__toolbar" @submit="handleSearch">
+        <UiInput
           v-model="query.keyword"
           class="system-user-page__search"
           placeholder="按姓名、角色或邮箱搜索"
           clearable
-          @keyup.enter="loadUsers"
+          @keyup.enter="handleSearch"
         />
+        <template #actions>
+          <UiButton native-type="submit">查询</UiButton>
+          <UiButton v-permission="'user:create'" type="primary">新建用户</UiButton>
+        </template>
+      </AppSearchForm>
 
-        <div class="system-user-page__actions">
-          <el-button @click="loadUsers">查询</el-button>
-          <el-button v-permission="'user:create'" type="primary">新建用户</el-button>
-        </div>
-      </div>
-
-      <el-table v-loading="loading" :data="tableData.list">
-        <el-table-column prop="name" label="姓名" min-width="120" />
-        <el-table-column prop="role" label="角色" min-width="120" />
-        <el-table-column prop="email" label="邮箱" min-width="220" />
-        <el-table-column label="状态" width="120">
-          <template #default="{ row }">
-            <UserStatusTag :status="row.status" />
-          </template>
-        </el-table-column>
-      </el-table>
-
-      <div class="system-user-page__pagination">
-        <el-pagination
-          background
-          layout="total, prev, pager, next"
-          :current-page="query.page"
-          :page-size="query.pageSize"
-          :total="tableData.total"
-          @current-change="handlePageChange"
-        />
-      </div>
+      <AppDataTable
+        :columns="columns"
+        :data="tableData.list"
+        :loading="loading"
+        :pagination="{
+          page: query.page,
+          pageSize: query.pageSize,
+          total: tableData.total
+        }"
+        @page-change="handlePageChange"
+      />
     </AppCard>
   </section>
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue';
-import { ElMessage } from 'element-plus';
+import { h, reactive } from 'vue';
 
 import AppCard from '@/shared/components/AppCard.vue';
+import AppDataTable from '@/shared/components/AppDataTable.vue';
+import AppSearchForm from '@/shared/components/AppSearchForm.vue';
+import AppStatusTag from '@/shared/components/AppStatusTag.vue';
+import type { AppDataTableColumn } from '@/shared/components/app-data-table';
 import { useLoading } from '@/shared/composables/use-loading';
+import UiButton from '@/ui/primitives/UiButton.vue';
+import UiInput from '@/ui/primitives/UiInput.vue';
+import { uiMessage } from '@/ui/services/message';
 
 import { fetchSystemUsers } from '../api';
-import type { SystemUserPageResult } from '../types';
-import UserStatusTag from '../components/UserStatusTag.vue';
+import type { SystemUser, SystemUserPageResult } from '../types';
 
 const query = reactive({
   page: 1,
@@ -66,14 +60,30 @@ const tableData = reactive<SystemUserPageResult>({
 });
 
 const { loading, withLoading } = useLoading();
+const columns: AppDataTableColumn<SystemUser>[] = [
+  { key: 'name', title: '姓名', minWidth: 120 },
+  { key: 'role', title: '角色', minWidth: 120 },
+  { key: 'email', title: '邮箱', minWidth: 220 },
+  {
+    key: 'status',
+    title: '状态',
+    width: 120,
+    render: (row) => h(AppStatusTag, { status: row.status })
+  }
+];
 
 async function loadUsers() {
   try {
     const payload = await withLoading(() => fetchSystemUsers(query));
     Object.assign(tableData, payload);
   } catch (error) {
-    ElMessage.error(error instanceof Error ? error.message : '查询失败');
+    uiMessage.error(error instanceof Error ? error.message : '查询失败');
   }
+}
+
+async function handleSearch() {
+  query.page = 1;
+  await loadUsers();
 }
 
 async function handlePageChange(page: number) {
@@ -86,10 +96,6 @@ loadUsers();
 
 <style scoped lang="scss">
 .system-user-page__toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
   margin-bottom: 16px;
 }
 
@@ -97,29 +103,9 @@ loadUsers();
   max-width: 360px;
 }
 
-.system-user-page__actions {
-  display: flex;
-  gap: 12px;
-}
-
-.system-user-page__pagination {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
-}
-
 @media (max-width: 840px) {
-  .system-user-page__toolbar {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
   .system-user-page__search {
     max-width: none;
-  }
-
-  .system-user-page__actions {
-    justify-content: flex-end;
   }
 }
 </style>

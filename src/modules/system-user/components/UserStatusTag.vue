@@ -1,10 +1,10 @@
 <template>
-  <el-tag :type="status === 'enabled' ? 'success' : 'info'" effect="plain">
-    {{ status === 'enabled' ? '启用' : '停用' }}
-  </el-tag>
+  <AppStatusTag :status="status" />
 </template>
 
 <script setup lang="ts">
+import AppStatusTag from '@/shared/components/AppStatusTag.vue';
+
 defineProps<{
   status: 'enabled' | 'disabled';
 }>();

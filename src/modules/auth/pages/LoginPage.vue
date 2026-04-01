@@ -6,24 +6,29 @@
 
     <div class="login-page__panel">
       <AppCard title="欢迎回来" description="使用 Mock 账号即可直接进入后台示例。">
-        <el-form ref="formRef" :model="formState" :rules="rules" label-position="top" @submit.prevent>
-          <el-form-item label="账号" prop="username">
-            <el-input v-model="formState.username" placeholder="admin / editor" />
-          </el-form-item>
+        <UiForm ref="formRef" :model="formState" :rules="rules" label-position="top" @submit="handleSubmit">
+          <UiFormItem label="账号" path="username">
+            <UiInput v-model="formState.username" placeholder="admin / editor" />
+          </UiFormItem>
 
-          <el-form-item label="密码" prop="password">
-            <el-input
+          <UiFormItem label="密码" path="password">
+            <UiInput
               v-model="formState.password"
               placeholder="请输入密码"
               show-password
               @keyup.enter="handleSubmit"
             />
-          </el-form-item>
+          </UiFormItem>
 
-          <el-button class="login-page__submit" type="primary" :loading="loading" @click="handleSubmit">
+          <UiButton
+            class="login-page__submit"
+            type="primary"
+            :loading="loading"
+            native-type="submit"
+          >
             登录系统
-          </el-button>
-        </el-form>
+          </UiButton>
+        </UiForm>
 
         <div class="login-page__tips">
           <p>管理员：admin / 123456</p>
@@ -36,36 +41,46 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
-import { ElMessage, type FormInstance, type FormRules } from 'element-plus';
 import { useRoute, useRouter } from 'vue-router';
 
 import { appConfig } from '@/config/app';
 import AppCard from '@/shared/components/AppCard.vue';
 import { useLoading } from '@/shared/composables/use-loading';
 import { useAuthStore } from '@/stores/auth';
+import UiButton from '@/ui/primitives/UiButton.vue';
+import UiForm from '@/ui/primitives/UiForm.vue';
+import UiFormItem from '@/ui/primitives/UiFormItem.vue';
+import UiInput from '@/ui/primitives/UiInput.vue';
+import { uiMessage } from '@/ui/services/message';
+import type { UiFormInstance, UiFormRules } from '@/ui/types/form';
 
 import LoginHero from '../components/LoginHero.vue';
+
+type LoginFormState = {
+  username: string;
+  password: string;
+};
 
 const authStore = useAuthStore();
 const route = useRoute();
 const router = useRouter();
-const formRef = ref<FormInstance>();
+const formRef = ref<UiFormInstance | null>(null);
 const { loading, withLoading } = useLoading();
 
-const formState = reactive({
+const formState = reactive<LoginFormState>({
   username: 'admin',
   password: '123456'
 });
 
-const rules: FormRules<typeof formState> = {
+const rules: UiFormRules<LoginFormState> = {
   username: [{ required: true, message: '请输入账号', trigger: 'blur' }],
   password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
 };
 
 async function handleSubmit() {
-  const isValid = await formRef.value?.validate().catch(() => false);
-
-  if (!isValid) {
+  try {
+    await formRef.value?.validate();
+  } catch {
     return;
   }
 
@@ -79,9 +94,9 @@ async function handleSubmit() {
       await router.replace(nextPath);
     });
 
-    ElMessage.success('登录成功');
+    uiMessage.success('登录成功');
   } catch (error) {
-    ElMessage.error(error instanceof Error ? error.message : '登录失败');
+    uiMessage.error(error instanceof Error ? error.message : '登录失败');
   }
 }
 </script>

@@ -76,6 +76,27 @@ export default [
     }
   },
   {
+    files: ['src/**/*.ts', 'src/**/*.vue'],
+    ignores: ['src/ui/**'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              name: 'element-plus',
+              message: '请通过 src/ui 适配层访问 UI 能力。'
+            },
+            {
+              name: 'naive-ui',
+              message: '请通过 src/ui 适配层访问 UI 能力。'
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
     files: ['**/*.cjs'],
     languageOptions: {
       sourceType: 'commonjs',

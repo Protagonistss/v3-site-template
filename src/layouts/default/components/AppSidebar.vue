@@ -5,35 +5,92 @@
       <span v-show="!appStore.sidebarCollapsed">Admin Starter</span>
     </RouterLink>
 
-    <el-scrollbar class="app-sidebar__scroll">
-      <el-menu
-        :collapse="appStore.sidebarCollapsed"
-        :default-active="route.path"
-        :collapse-transition="false"
-        router
-      >
-        <SidebarMenuItem
-          v-for="routeRecord in authStore.menuRoutes"
-          :key="routeRecord.path"
-          :route-record="routeRecord"
-        />
-      </el-menu>
-    </el-scrollbar>
+    <UiScrollbar class="app-sidebar__scroll">
+      <UiMenu
+        :collapsed="appStore.sidebarCollapsed"
+        :inverted="true"
+        :options="menuOptions"
+        :value="activeMenuKey"
+        @select="handleSelect"
+      />
+    </UiScrollbar>
   </aside>
 </template>
 
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
+import { computed } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 import logoUrl from '@/assets/logo-mark.svg';
+import type { AppRouteRecordRaw } from '@/router/types';
+import { resolveRoutePath } from '@/shared/utils/route';
 import { useAppStore } from '@/stores/app';
 import { useAuthStore } from '@/stores/auth';
-
-import SidebarMenuItem from './SidebarMenuItem.vue';
+import UiMenu from '@/ui/primitives/UiMenu.vue';
+import UiScrollbar from '@/ui/primitives/UiScrollbar.vue';
+import type { UiMenuOption } from '@/ui/types/menu';
 
 const route = useRoute();
+const router = useRouter();
 const appStore = useAppStore();
 const authStore = useAuthStore();
+
+const menuOptions = computed(() =>
+  authStore.menuRoutes
+    .map((routeRecord) => createMenuOption(routeRecord))
+    .filter((option): option is UiMenuOption => option !== null)
+);
+
+const activeMenuKey = computed(() => {
+  const availableKeys = new Set(collectMenuKeys(menuOptions.value));
+  const matchedPath = [...route.matched]
+    .map((record) => record.path)
+    .reverse()
+    .find((path) => availableKeys.has(path));
+
+  return matchedPath ?? route.path;
+});
+
+function createMenuOption(
+  routeRecord: AppRouteRecordRaw,
+  parentPath = ''
+): UiMenuOption | null {
+  if (routeRecord.meta.hidden) {
+    return null;
+  }
+
+  const currentPath = routeRecord.path.startsWith('/')
+    ? routeRecord.path
+    : resolveRoutePath(parentPath, routeRecord.path);
+  const visibleChildren = ((routeRecord.children ?? []) as AppRouteRecordRaw[])
+    .map((child) => createMenuOption(child, currentPath))
+    .filter((option): option is UiMenuOption => option !== null);
+
+  if (visibleChildren.length <= 1) {
+    return {
+      key: visibleChildren[0]?.key ?? currentPath,
+      label: routeRecord.meta.title
+    };
+  }
+
+  return {
+    key: currentPath,
+    label: routeRecord.meta.title,
+    children: visibleChildren
+  };
+}
+
+function collectMenuKeys(options: UiMenuOption[]): string[] {
+  return options.flatMap((option) => [option.key, ...collectMenuKeys(option.children ?? [])]);
+}
+
+async function handleSelect(key: string) {
+  if (key === route.path) {
+    return;
+  }
+
+  await router.push(key);
+}
 </script>
 
 <style scoped lang="scss">
@@ -73,19 +130,20 @@ const authStore = useAuthStore();
   flex: 1;
 }
 
-:deep(.el-menu) {
+:deep(.n-menu) {
   border-right: 0;
   background: transparent;
 }
 
-:deep(.el-menu-item),
-:deep(.el-sub-menu__title) {
+:deep(.n-menu-item-content),
+:deep(.n-submenu .n-menu-item-content-header) {
   margin: 4px 12px;
   border-radius: 12px;
+  width: calc(100% - 24px);
   color: rgba(248, 250, 252, 0.72);
 }
 
-:deep(.el-menu-item.is-active) {
+:deep(.n-menu-item-content--selected) {
   background: linear-gradient(135deg, #1976d2 0%, #2196f3 100%);
   color: #ffffff;
 }

@@ -1,16 +1,16 @@
 <template>
   <header class="app-header">
     <div class="app-header__left">
-      <el-button text @click="appStore.toggleSidebar()">
+      <UiButton text @click="appStore.toggleSidebar()">
         {{ appStore.sidebarCollapsed ? '展开菜单' : '收起菜单' }}
-      </el-button>
+      </UiButton>
       <div>
         <p class="app-header__eyebrow">生产级 Vue 3 脚手架</p>
         <h1>{{ pageTitle }}</h1>
       </div>
     </div>
 
-    <el-dropdown>
+    <UiDropdown :options="userMenuOptions" @select="handleMenuSelect">
       <div class="app-header__user">
         <span class="app-header__avatar">{{ userInitial }}</span>
         <div>
@@ -18,13 +18,7 @@
           <small>{{ authStore.roles.join(', ') || 'guest' }}</small>
         </div>
       </div>
-
-      <template #dropdown>
-        <el-dropdown-menu>
-          <el-dropdown-item @click="handleLogout">退出登录</el-dropdown-item>
-        </el-dropdown-menu>
-      </template>
-    </el-dropdown>
+    </UiDropdown>
   </header>
 </template>
 
@@ -34,6 +28,9 @@ import { useRoute, useRouter } from 'vue-router';
 
 import { useAppStore } from '@/stores/app';
 import { useAuthStore } from '@/stores/auth';
+import UiButton from '@/ui/primitives/UiButton.vue';
+import UiDropdown from '@/ui/primitives/UiDropdown.vue';
+import type { UiDropdownOption } from '@/ui/types/dropdown';
 
 const appStore = useAppStore();
 const authStore = useAuthStore();
@@ -42,9 +39,18 @@ const router = useRouter();
 
 const pageTitle = computed(() => route.meta.title ?? '工作台');
 const userInitial = computed(() => authStore.userInfo?.avatar ?? 'A');
+const userMenuOptions: UiDropdownOption[] = [{ label: '退出登录', key: 'logout' }];
 
 async function handleLogout() {
   await authStore.logout(router);
+}
+
+async function handleMenuSelect(key: string) {
+  if (key !== 'logout') {
+    return;
+  }
+
+  await handleLogout();
 }
 </script>
 
