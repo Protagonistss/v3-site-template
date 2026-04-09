@@ -21,6 +21,7 @@ export default defineConfig(({ mode }) => {
       proxy: createProxy(appEnv)
     },
     build: {
+      target: 'es2020',
       rollupOptions: {
         output: {
           manualChunks(id) {
