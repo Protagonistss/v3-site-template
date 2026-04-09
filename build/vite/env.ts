@@ -1,8 +1,6 @@
-export interface AppEnv {
-  title: string
-  apiBaseUrl: string
-  enableMock: boolean
-}
+import type { AppEnv } from '../../src/config/env'
+
+export type { AppEnv }
 
 export function readAppEnv(source: Record<string, string | undefined>): AppEnv {
   return {

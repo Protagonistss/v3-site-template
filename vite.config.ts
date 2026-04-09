@@ -10,10 +10,18 @@ export default defineConfig(({ mode }) => {
   const appEnv = readAppEnv(viteEnv)
 
   return {
+    base: viteEnv.VITE_APP_BASE ?? '/',
     plugins: createVitePlugins(),
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url))
+      }
+    },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler'
+        }
       }
     },
     server: {
@@ -22,8 +30,12 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       target: 'es2020',
+      sourcemap: mode === 'staging' ? 'hidden' : false,
       rollupOptions: {
         output: {
+          chunkFileNames: 'js/[name]-[hash].js',
+          entryFileNames: 'js/[name]-[hash].js',
+          assetFileNames: '[ext]/[name]-[hash].[ext]',
           manualChunks(id) {
             if (
               id.includes('node_modules/vue/') ||
@@ -38,11 +50,7 @@ export default defineConfig(({ mode }) => {
               id.includes('node_modules/vueuc/') ||
               id.includes('node_modules/vooks/') ||
               id.includes('node_modules/vdirs/') ||
-              id.includes('node_modules/treemate/') ||
-              id.includes('node_modules/seemly/') ||
-              id.includes('node_modules/evtd/') ||
-              id.includes('node_modules/css-render/') ||
-              id.includes('node_modules/@css-render/')
+              id.includes('node_modules/treemate/')
             ) {
               return 'ui'
             }
