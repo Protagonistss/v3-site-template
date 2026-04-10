@@ -26,20 +26,68 @@
   padding: 40px;
   text-align: center;
   box-shadow: var(--shadow-elevated);
+  animation: scaleIn var(--transition-duration-entrance, 500ms)
+    var(--transition-ease-out, cubic-bezier(0.16, 1, 0.3, 1)) both;
+}
+
+.exception-card h1 {
+  margin: 0 0 8px;
+}
+
+.exception-card p {
+  margin: 0;
+  color: var(--color-text-secondary);
 }
 
 .exception-code {
   margin: 0 0 12px;
   color: var(--color-warning);
-  font-size: 56px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-size: 80px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  animation: fadeInUp var(--transition-duration-entrance, 500ms)
+    var(--transition-ease-out, cubic-bezier(0.16, 1, 0.3, 1)) both;
+  cursor: default;
+  transition: color var(--transition-duration-fast, 150ms) ease;
+}
+
+.exception-code:hover {
+  animation: glitch 0.3s ease;
 }
 
 .exception-link {
   display: inline-flex;
+  align-items: center;
+  gap: 6px;
   margin-top: 24px;
-  color: var(--color-primary);
+  padding: 10px 20px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-strong);
+  color: var(--color-text-primary);
   text-decoration: none;
+  font-weight: 600;
+  transition:
+    border-color var(--transition-duration-fast, 150ms) ease,
+    transform var(--transition-duration-fast, 150ms)
+      var(--transition-ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
+    box-shadow var(--transition-duration-fast, 150ms) ease;
+
+  &::before {
+    content: '\2190';
+    transition: transform var(--transition-duration-fast, 150ms)
+      var(--transition-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+  }
+
+  &:hover {
+    border-color: var(--color-primary);
+    transform: translateX(-4px);
+    box-shadow: var(--shadow-hover, 0 8px 24px rgba(0, 0, 0, 0.06));
+  }
+
+  &:hover::before {
+    transform: translateX(-3px);
+  }
 }
 </style>

@@ -1,9 +1,48 @@
+// ─── Fade ────────────────────────────────────────────────────
+
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.2s ease;
+  transition: opacity
+    var(--transition-duration-normal, 250ms)
+    var(--transition-ease-smooth, cubic-bezier(0.25, 0.1, 0.25, 1));
 }
 
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+// ─── Route: fade-slide (default page transition) ─────────────
+
+.route-fade-slide-enter-active {
+  transition:
+    opacity var(--transition-duration-entrance, 500ms)
+      var(--transition-ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
+    transform var(--transition-duration-entrance, 500ms)
+      var(--transition-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+.route-fade-slide-leave-active {
+  transition:
+    opacity calc(var(--transition-duration-entrance, 500ms) * 0.5)
+      var(--transition-ease-in, cubic-bezier(0.7, 0, 0.84, 0)),
+    transform calc(var(--transition-duration-entrance, 500ms) * 0.5)
+      var(--transition-ease-in, cubic-bezier(0.7, 0, 0.84, 0));
+}
+
+.route-fade-slide-enter-from {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.route-fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-4px);
+}
+
+// ─── Stagger entrance ────────────────────────────────────────
+
+.stagger-item {
+  animation: cardEntrance var(--transition-duration-entrance, 500ms)
+    var(--transition-ease-out, cubic-bezier(0.16, 1, 0.3, 1)) both;
 }

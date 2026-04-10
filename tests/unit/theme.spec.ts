@@ -23,7 +23,7 @@ describe('theme catalog', () => {
 
   it('creates css variables from the resolved active theme', () => {
     const preference: ThemePreference = {
-      brand: 'aurora',
+      brand: 'monochrome',
       mode: 'dark'
     }
     const activeTheme = resolveThemeTokens(preference)
@@ -39,7 +39,7 @@ describe('theme catalog', () => {
 
   it('applies css variables and root attributes for a preference', () => {
     const preference: ThemePreference = {
-      brand: 'aurora',
+      brand: 'monochrome',
       mode: 'dark'
     }
     const activeTheme = resolveThemeTokens(preference)
@@ -58,7 +58,7 @@ describe('theme catalog', () => {
 
   it('creates naive-ui overrides from the same source', () => {
     const activeTheme = resolveThemeTokens({
-      brand: 'classic',
+      brand: 'monochrome',
       mode: 'dark'
     })
     const overrides = createUiThemeOverrides(activeTheme)

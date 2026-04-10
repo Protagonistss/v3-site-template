@@ -13,19 +13,22 @@ export async function mockFetchDashboardOverview(): Promise<DashboardOverview> {
         title: '本周新增订单',
         value: '1,284',
         trend: '+12.4%',
-        tone: 'primary'
+        tone: 'primary',
+        icon: 'orders'
       },
       {
         title: '转化率',
         value: '24.8%',
         trend: '+3.1%',
-        tone: 'success'
+        tone: 'success',
+        icon: 'conversion'
       },
       {
         title: '待处理工单',
         value: '37',
         trend: '-8.0%',
-        tone: 'warning'
+        tone: 'warning',
+        icon: 'tickets'
       }
     ],
     todos: ['检查上线审批流', '复核 2 个异常报警', '确认四月活动排期']

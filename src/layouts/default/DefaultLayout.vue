@@ -5,7 +5,11 @@
       <AppHeader />
       <AppTabsBar />
       <main class="layout-content">
-        <RouterView />
+        <RouterView v-slot="{ Component, route: currentRoute }">
+          <Transition name="route-fade-slide" mode="out-in">
+            <component :is="Component" :key="currentRoute.fullPath" />
+          </Transition>
+        </RouterView>
       </main>
     </div>
   </div>

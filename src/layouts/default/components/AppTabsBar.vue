@@ -43,9 +43,19 @@ async function handleClose(fullPath: string) {
   flex-wrap: wrap;
   gap: 8px;
   padding: 0 24px 20px;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .tabs-bar__tag {
   cursor: pointer;
+  transition:
+    transform var(--transition-duration-fast, 150ms)
+      var(--transition-ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
+    box-shadow var(--transition-duration-fast, 150ms) ease;
+}
+
+.tabs-bar__tag:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-soft);
 }
 </style>

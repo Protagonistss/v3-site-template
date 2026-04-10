@@ -3,6 +3,7 @@ export interface DashboardMetric {
   value: string
   trend: string
   tone: 'success' | 'warning' | 'primary'
+  icon: 'orders' | 'conversion' | 'tickets'
 }
 
 export interface DashboardOverview {

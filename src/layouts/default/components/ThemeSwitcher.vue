@@ -2,43 +2,18 @@
   <UiPopover placement="bottom-end" trigger="click">
     <template #trigger>
       <button class="theme-switcher__trigger" type="button">
-        <span class="theme-switcher__trigger-label">主题</span>
-        <strong>{{ currentThemeLabel }}</strong>
+        <span class="theme-switcher__trigger-label">模式</span>
+        <strong>{{ modeLabel }}</strong>
       </button>
     </template>
 
     <div class="theme-switcher">
       <section class="theme-switcher__section">
         <div class="theme-switcher__section-header">
-          <span>品牌</span>
-          <small>切换整体视觉调性</small>
-        </div>
-        <div class="theme-switcher__options">
-          <button
-            v-for="option in brandOptions"
-            :key="option.value"
-            :class="[
-              'theme-switcher__option',
-              {
-                'theme-switcher__option--active':
-                  themeStore.brand === option.value
-              }
-            ]"
-            type="button"
-            @click="themeStore.setBrand(option.value)"
-          >
-            <strong>{{ option.label }}</strong>
-            <small>{{ option.description }}</small>
-          </button>
-        </div>
-      </section>
-
-      <section class="theme-switcher__section">
-        <div class="theme-switcher__section-header">
-          <span>模式</span>
+          <span>外观模式</span>
           <small>切换浅色或深色界面</small>
         </div>
-        <div class="theme-switcher__options theme-switcher__options--compact">
+        <div class="theme-switcher__options">
           <button
             v-for="option in modeOptions"
             :key="option.value"
@@ -66,7 +41,7 @@ import { computed } from 'vue'
 
 import { useThemeStore } from '@/stores/theme'
 import UiPopover from '@/ui/primitives/UiPopover.vue'
-import type { ThemeBrandId, ThemeMode } from '@/theme/brand'
+import type { ThemeMode } from '@/theme/brand'
 
 type ThemeOption<T> = {
   label: string
@@ -75,19 +50,6 @@ type ThemeOption<T> = {
 }
 
 const themeStore = useThemeStore()
-
-const brandOptions: ThemeOption<ThemeBrandId>[] = [
-  {
-    label: '经典蓝',
-    description: '稳健、清晰的管理后台默认风格',
-    value: 'classic'
-  },
-  {
-    label: '青绿科技',
-    description: '更冷感、更科技导向的品牌方向',
-    value: 'aurora'
-  }
-]
 
 const modeOptions: ThemeOption<ThemeMode>[] = [
   {
@@ -102,18 +64,10 @@ const modeOptions: ThemeOption<ThemeMode>[] = [
   }
 ]
 
-const brandLabel = computed(
-  () =>
-    brandOptions.find((option) => option.value === themeStore.brand)?.label ??
-    '经典蓝'
-)
 const modeLabel = computed(
   () =>
     modeOptions.find((option) => option.value === themeStore.mode)?.label ??
     '浅色'
-)
-const currentThemeLabel = computed(
-  () => `${brandLabel.value} · ${modeLabel.value}`
 )
 </script>
 
@@ -155,7 +109,7 @@ const currentThemeLabel = computed(
 }
 
 .theme-switcher {
-  width: min(360px, calc(100vw - 40px));
+  width: min(320px, calc(100vw - 40px));
   display: grid;
   gap: 18px;
 }
@@ -184,9 +138,6 @@ const currentThemeLabel = computed(
 .theme-switcher__options {
   display: grid;
   gap: 10px;
-}
-
-.theme-switcher__options--compact {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 

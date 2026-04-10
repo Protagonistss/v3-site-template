@@ -28,7 +28,7 @@ describe('theme store', () => {
     window.localStorage.setItem(
       STORAGE_KEYS.theme,
       JSON.stringify({
-        brand: 'aurora',
+        brand: 'monochrome',
         mode: 'dark'
       })
     )
@@ -36,15 +36,15 @@ describe('theme store', () => {
     const themeStore = useThemeStore()
     themeStore.initialize()
 
-    expect(themeStore.brand).toBe('aurora')
+    expect(themeStore.brand).toBe('monochrome')
     expect(themeStore.mode).toBe('dark')
     expect(themeStore.resolvedTokens.color.primary).toBe(
       resolveThemeTokens({
-        brand: 'aurora',
+        brand: 'monochrome',
         mode: 'dark'
       }).color.primary
     )
-    expect(document.documentElement.dataset.themeBrand).toBe('aurora')
+    expect(document.documentElement.dataset.themeBrand).toBe('monochrome')
     expect(document.documentElement.dataset.themeMode).toBe('dark')
   })
 
@@ -74,22 +74,22 @@ describe('theme store', () => {
     const themeStore = useThemeStore()
     themeStore.initialize()
 
-    themeStore.setBrand('aurora')
+    themeStore.setBrand('monochrome')
     themeStore.setMode('dark')
 
-    expect(themeStore.brand).toBe('aurora')
+    expect(themeStore.brand).toBe('monochrome')
     expect(themeStore.mode).toBe('dark')
     expect(
       document.documentElement.style.getPropertyValue('--color-primary')
     ).toBe(
       resolveThemeTokens({
-        brand: 'aurora',
+        brand: 'monochrome',
         mode: 'dark'
       }).color.primary
     )
     expect(window.localStorage.getItem(STORAGE_KEYS.theme)).toBe(
       JSON.stringify({
-        brand: 'aurora',
+        brand: 'monochrome',
         mode: 'dark'
       })
     )

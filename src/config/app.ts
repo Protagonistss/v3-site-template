@@ -6,7 +6,7 @@ export const appConfig = {
   title: envConfig.title,
   homePath: '/dashboard',
   loginPath: '/login',
-  defaultThemeBrand: 'classic',
+  defaultThemeBrand: 'monochrome',
   defaultThemeMode: 'light'
 } as const satisfies {
   title: string
