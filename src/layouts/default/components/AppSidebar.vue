@@ -6,7 +6,7 @@
     ]"
   >
     <RouterLink class="app-sidebar__brand" to="/dashboard">
-      <img :src="logoUrl" alt="logo" />
+      <img :src="logoUrl" alt="logo" :style="{ filter: logoFilter }" />
       <span v-show="!appStore.sidebarCollapsed">Admin Starter</span>
     </RouterLink>
 
@@ -31,6 +31,7 @@ import type { AppRouteRecordRaw } from '@/router/types'
 import { resolveRoutePath } from '@/shared/utils/route'
 import { useAppStore } from '@/stores/app'
 import { useAuthStore } from '@/stores/auth'
+import { useThemeStore } from '@/stores/theme'
 import UiMenu from '@/ui/primitives/UiMenu.vue'
 import UiScrollbar from '@/ui/primitives/UiScrollbar.vue'
 import type { UiMenuOption } from '@/ui/types/menu'
@@ -39,6 +40,13 @@ const route = useRoute()
 const router = useRouter()
 const appStore = useAppStore()
 const authStore = useAuthStore()
+const themeStore = useThemeStore()
+
+const logoFilter = computed(() =>
+  themeStore.mode === 'dark'
+    ? 'grayscale(1) invert(1)'
+    : 'grayscale(1)'
+)
 
 const menuOptions = computed(() =>
   authStore.menuRoutes
@@ -148,8 +156,10 @@ async function handleSelect(key: string) {
 .app-sidebar__brand img {
   width: 32px;
   height: 32px;
-  transition: transform var(--transition-duration-normal, 250ms)
-    var(--transition-ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1));
+  transition:
+    transform var(--transition-duration-normal, 250ms)
+      var(--transition-ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1)),
+    filter var(--transition-duration-normal, 250ms) ease;
 }
 
 .app-sidebar__brand:hover img {
@@ -166,6 +176,8 @@ async function handleSelect(key: string) {
 :deep(.n-menu) {
   border-right: 0;
   background: transparent;
+  --n-item-color-active: transparent !important;
+  --n-item-color-active-hover: transparent !important;
 }
 
 :deep(.n-menu-item-content),
@@ -182,11 +194,30 @@ async function handleSelect(key: string) {
 }
 
 :deep(.n-menu-item-content:not(.n-menu-item-content--selected):hover) {
+  background: var(--color-sidebar-hover);
   transform: translateX(4px);
 }
 
-:deep(.n-menu-item-content--selected) {
-  background: var(--gradient-brand);
-  color: var(--color-text-contrast);
+// Active (pressed) state — override Naive UI's default gray
+:deep(.n-menu-item-content:active:not(.n-menu-item-content--selected)) {
+  background: var(--color-sidebar-hover);
+  transform: translateX(2px) scale(0.98);
+}
+
+:deep(.n-menu-item-content--selected),
+:deep(.n-menu-item-content--selected .n-menu-item-content-header) {
+  background: var(--gradient-brand) !important;
+  color: var(--color-text-contrast) !important;
+}
+
+:deep(.n-menu-item-content--selected:hover),
+:deep(.n-menu-item-content--selected:active) {
+  filter: brightness(1.1);
+  transform: none;
+}
+
+:deep(.n-menu-item-content--selected .n-menu-item-content__icon),
+:deep(.n-menu-item-content--selected .n-menu-item-content-header .n-menu-item-content-header__extra) {
+  color: var(--color-text-contrast) !important;
 }
 </style>

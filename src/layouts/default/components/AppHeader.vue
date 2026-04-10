@@ -9,9 +9,11 @@
       >
         <svg
           class="app-header__toggle-icon"
-          :class="{ 'app-header__toggle-icon--collapsed': appStore.sidebarCollapsed }"
-          width="20"
-          height="20"
+          :class="{
+            'app-header__toggle-icon--collapsed': appStore.sidebarCollapsed
+          }"
+          width="18"
+          height="18"
           viewBox="0 0 20 20"
           fill="none"
           stroke="currentColor"
@@ -23,22 +25,30 @@
           <line x1="3" y1="15" x2="13" y2="15" />
         </svg>
       </button>
-      <div>
-        <p class="app-header__eyebrow">生产级 Vue 3 脚手架</p>
-        <h1>{{ pageTitle }}</h1>
-      </div>
+
+      <nav v-if="breadcrumbs.length" class="app-header__breadcrumb">
+        <template v-for="(crumb, index) in breadcrumbs" :key="crumb.path">
+          <span v-if="index > 0" class="app-header__breadcrumb-sep" aria-hidden="true">/</span>
+          <router-link
+            v-if="index < breadcrumbs.length - 1"
+            :to="crumb.path"
+            class="app-header__breadcrumb-link"
+          >
+            {{ crumb.title }}
+          </router-link>
+          <span v-else class="app-header__breadcrumb-current">
+            {{ crumb.title }}
+          </span>
+        </template>
+      </nav>
     </div>
 
     <div class="app-header__right">
       <ThemeSwitcher />
       <UiDropdown :options="userMenuOptions" @select="handleMenuSelect">
-        <div class="app-header__user">
+        <button class="app-header__avatar-btn" type="button">
           <span class="app-header__avatar">{{ userInitial }}</span>
-          <div>
-            <p>{{ authStore.userInfo?.name ?? '未登录' }}</p>
-            <small>{{ authStore.roles.join(', ') || 'guest' }}</small>
-          </div>
-        </div>
+        </button>
       </UiDropdown>
     </div>
   </header>
@@ -60,11 +70,39 @@ const authStore = useAuthStore()
 const route = useRoute()
 const router = useRouter()
 
-const pageTitle = computed(() => route.meta.title ?? '工作台')
 const userInitial = computed(() => authStore.userInfo?.avatar ?? 'A')
 const userMenuOptions: UiDropdownOption[] = [
   { label: '退出登录', key: 'logout' }
 ]
+
+const breadcrumbs = computed(() => {
+  let accumulated = ''
+  const entries: { path: string; title: string }[] = []
+
+  for (const record of route.matched) {
+    if (!record.meta?.title || record.meta?.hidden) continue
+
+    const segment = record.path.startsWith('/')
+      ? record.path
+      : `${accumulated.replace(/\/$/, '')}/${record.path}`.replace(
+          /\/{2,}/g,
+          '/'
+        )
+    accumulated = segment
+
+    if (
+      entries.length > 0 &&
+      entries[entries.length - 1].path === segment
+    ) {
+      entries[entries.length - 1].title = record.meta.title as string
+      continue
+    }
+
+    entries.push({ path: segment, title: record.meta.title as string })
+  }
+
+  return entries
+})
 
 async function handleLogout() {
   await authStore.logout(router)
@@ -85,48 +123,55 @@ async function handleMenuSelect(key: string) {
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding: 20px 24px 12px;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .app-header__left {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
 }
 
 .app-header__right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
 }
+
+// ─── Toggle (ghost icon) ────────────────────────────────────
 
 .app-header__toggle {
   appearance: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border: 1px solid var(--color-border);
+  width: 36px;
+  height: 36px;
+  border: none;
   border-radius: var(--radius-md);
-  background: var(--color-surface-strong);
-  color: var(--color-text-primary);
+  background: transparent;
+  color: var(--color-text-secondary);
   cursor: pointer;
   transition:
     background var(--transition-duration-fast, 150ms) ease,
-    border-color var(--transition-duration-fast, 150ms) ease,
+    color var(--transition-duration-fast, 150ms) ease,
     transform var(--transition-duration-fast, 150ms)
       var(--transition-ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1));
 }
 
 .app-header__toggle:hover {
   background: var(--color-surface-contrast);
-  border-color: var(--color-primary-accent);
-  transform: scale(1.05);
+  color: var(--color-text-primary);
 }
 
 .app-header__toggle:active {
-  transform: scale(0.95);
+  transform: scale(0.92);
+}
+
+.app-header__toggle:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .app-header__toggle-icon {
@@ -138,55 +183,76 @@ async function handleMenuSelect(key: string) {
   transform: scaleX(0.8);
 }
 
-.app-header__left h1 {
-  margin: 0;
-  font-size: 24px;
-}
+// ─── Breadcrumb ─────────────────────────────────────────────
 
-.app-header__eyebrow {
-  margin: 0 0 4px;
-  color: var(--color-text-secondary);
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.app-header__user {
+.app-header__breadcrumb {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 8px 12px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  background: var(--color-surface-strong);
+  gap: 8px;
+  font-size: 14px;
+  min-width: 0;
+}
+
+.app-header__breadcrumb-sep {
+  color: var(--color-border);
+  font-size: 12px;
+  user-select: none;
+}
+
+.app-header__breadcrumb-link {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--transition-duration-fast, 150ms) ease;
+}
+
+.app-header__breadcrumb-link:hover {
+  color: var(--color-text-primary);
+}
+
+.app-header__breadcrumb-current {
+  color: var(--color-text-primary);
+  font-weight: 700;
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+
+// ─── Avatar (compact) ───────────────────────────────────────
+
+.app-header__avatar-btn {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  padding: 0;
   cursor: pointer;
   transition:
-    border-color var(--transition-duration-fast, 150ms) ease,
-    box-shadow var(--transition-duration-fast, 150ms) ease,
     transform var(--transition-duration-fast, 150ms)
-      var(--transition-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+      var(--transition-ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1));
 }
 
-.app-header__user:hover {
-  border-color: var(--color-primary-accent);
-  box-shadow: var(--shadow-hover, 0 8px 24px rgba(0, 0, 0, 0.06));
-  transform: translateY(-1px);
+.app-header__avatar-btn:hover {
+  transform: scale(1.1);
 }
 
-.app-header__user p,
-.app-header__user small {
-  margin: 0;
+.app-header__avatar-btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .app-header__avatar {
   display: inline-flex;
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   background: var(--gradient-brand-accent);
   color: var(--color-text-contrast);
   font-weight: 700;
+  font-size: 14px;
 }
 </style>

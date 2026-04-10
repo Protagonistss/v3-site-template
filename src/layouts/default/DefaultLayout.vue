@@ -3,7 +3,6 @@
     <AppSidebar />
     <div class="layout-main">
       <AppHeader />
-      <AppTabsBar />
       <main class="layout-content">
         <RouterView v-slot="{ Component, route: currentRoute }">
           <Transition name="route-fade-slide" mode="out-in">
@@ -18,7 +17,6 @@
 <script setup lang="ts">
 import AppHeader from './components/AppHeader.vue'
 import AppSidebar from './components/AppSidebar.vue'
-import AppTabsBar from './components/AppTabsBar.vue'
 </script>
 
 <style scoped lang="scss">

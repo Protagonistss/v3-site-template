@@ -72,6 +72,10 @@ export const useThemeStore = defineStore('theme', () => {
     })
   }
 
+  function toggleMode() {
+    setMode(mode.value === 'light' ? 'dark' : 'light')
+  }
+
   function resetToDefault() {
     setTheme(defaultThemePreference)
   }
@@ -85,6 +89,7 @@ export const useThemeStore = defineStore('theme', () => {
     setTheme,
     setBrand,
     setMode,
+    toggleMode,
     resetToDefault
   }
 })

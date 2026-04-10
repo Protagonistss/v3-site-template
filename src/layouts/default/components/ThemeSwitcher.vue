@@ -1,190 +1,113 @@
 <template>
-  <UiPopover placement="bottom-end" trigger="click">
-    <template #trigger>
-      <button class="theme-switcher__trigger" type="button">
-        <span class="theme-switcher__trigger-label">模式</span>
-        <strong>{{ modeLabel }}</strong>
-      </button>
-    </template>
+  <button
+    class="theme-toggle"
+    type="button"
+    :aria-label="
+      themeStore.mode === 'light' ? '切换到深色模式' : '切换到浅色模式'
+    "
+    @click="themeStore.toggleMode()"
+  >
+    <Transition name="theme-icon" mode="out-in">
+      <!-- Sun icon (shown in light mode → click to switch to dark) -->
+      <svg
+        v-if="themeStore.mode === 'light'"
+        key="sun"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <circle cx="12" cy="12" r="5" />
+        <line x1="12" y1="1" x2="12" y2="3" />
+        <line x1="12" y1="21" x2="12" y2="23" />
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+        <line x1="1" y1="12" x2="3" y2="12" />
+        <line x1="21" y1="12" x2="23" y2="12" />
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+      </svg>
 
-    <div class="theme-switcher">
-      <section class="theme-switcher__section">
-        <div class="theme-switcher__section-header">
-          <span>外观模式</span>
-          <small>切换浅色或深色界面</small>
-        </div>
-        <div class="theme-switcher__options">
-          <button
-            v-for="option in modeOptions"
-            :key="option.value"
-            :class="[
-              'theme-switcher__option',
-              {
-                'theme-switcher__option--active':
-                  themeStore.mode === option.value
-              }
-            ]"
-            type="button"
-            @click="themeStore.setMode(option.value)"
-          >
-            <strong>{{ option.label }}</strong>
-            <small>{{ option.description }}</small>
-          </button>
-        </div>
-      </section>
-    </div>
-  </UiPopover>
+      <!-- Moon icon (shown in dark mode → click to switch to light) -->
+      <svg
+        v-else
+        key="moon"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+      </svg>
+    </Transition>
+  </button>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-
 import { useThemeStore } from '@/stores/theme'
-import UiPopover from '@/ui/primitives/UiPopover.vue'
-import type { ThemeMode } from '@/theme/brand'
-
-type ThemeOption<T> = {
-  label: string
-  description: string
-  value: T
-}
 
 const themeStore = useThemeStore()
-
-const modeOptions: ThemeOption<ThemeMode>[] = [
-  {
-    label: '浅色',
-    description: '适合日间办公环境',
-    value: 'light'
-  },
-  {
-    label: '深色',
-    description: '适合低亮度或长时间使用',
-    value: 'dark'
-  }
-]
-
-const modeLabel = computed(
-  () =>
-    modeOptions.find((option) => option.value === themeStore.mode)?.label ??
-    '浅色'
-)
 </script>
 
 <style scoped lang="scss">
-.theme-switcher__trigger {
+.theme-toggle {
   appearance: none;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: 10px 14px;
-  background: var(--color-surface-strong);
-  color: var(--color-text-primary);
-  font: inherit;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-text-secondary);
   cursor: pointer;
   transition:
-    border-color 0.2s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+    background var(--transition-duration-fast, 150ms) ease,
+    color var(--transition-duration-fast, 150ms) ease,
+    transform var(--transition-duration-fast, 150ms)
+      var(--transition-ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1));
 }
 
-.theme-switcher__trigger:hover {
-  border-color: var(--color-primary);
-  box-shadow: var(--shadow-soft);
-  transform: translateY(-1px);
-}
-
-.theme-switcher__trigger strong {
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.theme-switcher__trigger-label {
-  color: var(--color-text-secondary);
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.theme-switcher {
-  width: min(320px, calc(100vw - 40px));
-  display: grid;
-  gap: 18px;
-}
-
-.theme-switcher__section {
-  display: grid;
-  gap: 12px;
-}
-
-.theme-switcher__section-header {
-  display: grid;
-  gap: 2px;
-}
-
-.theme-switcher__section-header span {
+.theme-toggle:hover {
+  background: var(--color-surface-contrast);
   color: var(--color-text-primary);
-  font-size: 14px;
-  font-weight: 700;
+  transform: scale(1.08);
 }
 
-.theme-switcher__section-header small {
-  color: var(--color-text-secondary);
-  font-size: 12px;
+.theme-toggle:active {
+  transform: scale(0.92);
 }
 
-.theme-switcher__options {
-  display: grid;
-  gap: 10px;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
-.theme-switcher__option {
-  appearance: none;
-  display: grid;
-  gap: 4px;
-  width: 100%;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: 12px 14px;
-  background: var(--color-surface-elevated);
-  color: var(--color-text-primary);
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
+// Icon transition
+.theme-icon-enter-active,
+.theme-icon-leave-active {
   transition:
-    border-color 0.2s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    background 0.2s ease;
+    opacity var(--transition-duration-fast, 150ms) ease,
+    transform var(--transition-duration-fast, 150ms)
+      var(--transition-ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1));
 }
 
-.theme-switcher__option:hover {
-  border-color: var(--color-primary);
-  box-shadow: var(--shadow-soft);
-  transform: translateY(-1px);
+.theme-icon-enter-from {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.6);
 }
 
-.theme-switcher__option strong {
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.theme-switcher__option small {
-  color: var(--color-text-secondary);
-  font-size: 12px;
-  line-height: 1.5;
-}
-
-.theme-switcher__option--active {
-  border-color: transparent;
-  background: var(--gradient-brand);
-  color: var(--color-text-contrast);
-}
-
-.theme-switcher__option--active small {
-  color: var(--color-text-contrast-secondary);
+.theme-icon-leave-to {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.6);
 }
 </style>
