@@ -1,18 +1,16 @@
 <template>
   <div class="login-hero">
     <div class="login-hero__geo" aria-hidden="true">
-      <div class="login-hero__grid"></div>
-      <div class="login-hero__ring login-hero__ring--outer"></div>
-      <div class="login-hero__ring login-hero__ring--inner"></div>
-      <div class="login-hero__dots"></div>
-      <div class="login-hero__accent"></div>
+      <div class="login-hero__grid" />
+      <div class="login-hero__ring login-hero__ring--outer" />
+      <div class="login-hero__ring login-hero__ring--inner" />
+      <div class="login-hero__dots" />
+      <div class="login-hero__accent" />
     </div>
 
     <div class="login-hero__content">
       <p class="login-hero__eyebrow">Vue 3 Starter</p>
-      <h1 class="login-hero__title">
-        给中后台项目<br />一个能直接<br />落地的起点
-      </h1>
+      <h1 class="login-hero__title">给中后台项目<br />一个能直接<br />落地的起点</h1>
       <p class="login-hero__description">
         包含目录分层、RBAC、请求层、Mock、测试骨架和可演进的模块组织方式。
       </p>
@@ -44,11 +42,7 @@
 </template>
 
 <script setup lang="ts">
-const features = [
-  '应用能力和业务模块解耦',
-  '默认支持角色和按钮级权限',
-  '可以平滑扩展到 Monorepo'
-]
+const features = ['应用能力和业务模块解耦', '默认支持角色和按钮级权限', '可以平滑扩展到 Monorepo']
 </script>
 
 <style scoped lang="scss">
@@ -92,16 +86,8 @@ const features = [
     linear-gradient(90deg, rgba(255, 255, 255, 1) 1px, transparent 1px);
   background-size: 56px 56px;
   opacity: 0.05;
-  -webkit-mask-image: radial-gradient(
-    ellipse 60% 50% at 65% 50%,
-    black 10%,
-    transparent 70%
-  );
-  mask-image: radial-gradient(
-    ellipse 60% 50% at 65% 50%,
-    black 10%,
-    transparent 70%
-  );
+  -webkit-mask-image: radial-gradient(ellipse 60% 50% at 65% 50%, black 10%, transparent 70%);
+  mask-image: radial-gradient(ellipse 60% 50% at 65% 50%, black 10%, transparent 70%);
 }
 
 // Double ring
@@ -135,11 +121,7 @@ const features = [
   left: 56px;
   width: 84px;
   height: 84px;
-  background-image: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 1) 1.2px,
-    transparent 1.2px
-  );
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 1) 1.2px, transparent 1.2px);
   background-size: 14px 14px;
   opacity: 0.15;
 }

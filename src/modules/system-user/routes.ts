@@ -1,6 +1,5 @@
-import type { AppRouteRecordRaw } from '@/router/types'
-
 import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
+import type { AppRouteRecordRaw } from '@/router/types'
 
 export const systemUserRoute: AppRouteRecordRaw = {
   path: '/system',

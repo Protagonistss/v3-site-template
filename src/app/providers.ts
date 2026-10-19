@@ -1,14 +1,16 @@
 import { createApp } from 'vue'
 
-import App from './App.vue'
-import { setupErrorHandler } from './error-handler'
-import { setupRouterGuards } from './router-guard'
-import { router } from '@/router'
 import { setupDirectives } from '@/plugins/directives'
+import { router } from '@/router'
 import { setupHttpClient } from '@/shared/request/client'
 import { pinia } from '@/stores'
 import { useAuthStore } from '@/stores/auth'
 import { useThemeStore } from '@/stores/theme'
+
+import App from './App.vue'
+import { setupErrorHandler } from './error-handler'
+import { setupRouterGuards } from './router-guard'
+
 import '@/styles/index.scss'
 import 'nprogress/nprogress.css'
 

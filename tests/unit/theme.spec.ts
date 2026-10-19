@@ -45,12 +45,12 @@ describe('theme catalog', () => {
     const activeTheme = resolveThemeTokens(preference)
     applyThemePreference(preference)
 
-    expect(
-      document.documentElement.style.getPropertyValue('--color-primary')
-    ).toBe(activeTheme.color.primary)
-    expect(
-      document.documentElement.style.getPropertyValue('--gradient-layout-shell')
-    ).toBe(activeTheme.gradient.layoutShell)
+    expect(document.documentElement.style.getPropertyValue('--color-primary')).toBe(
+      activeTheme.color.primary
+    )
+    expect(document.documentElement.style.getPropertyValue('--gradient-layout-shell')).toBe(
+      activeTheme.gradient.layoutShell
+    )
     expect(document.documentElement.dataset.themeBrand).toBe(preference.brand)
     expect(document.documentElement.dataset.themeMode).toBe(preference.mode)
     expect(document.documentElement.style.colorScheme).toBe(preference.mode)

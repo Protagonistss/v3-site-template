@@ -2,9 +2,7 @@
   <button
     class="theme-toggle"
     type="button"
-    :aria-label="
-      themeStore.mode === 'light' ? '切换到深色模式' : '切换到浅色模式'
-    "
+    :aria-label="themeStore.mode === 'light' ? '切换到深色模式' : '切换到浅色模式'"
     @click="themeStore.toggleMode()"
   >
     <Transition name="theme-icon" mode="out-in">

@@ -193,10 +193,7 @@ export const DEFAULT_THEME_PREFERENCE: ThemePreference = {
   mode: 'light'
 }
 
-export const themeCatalog: Record<
-  ThemeBrandId,
-  Record<ThemeMode, ThemeTokens>
-> = {
+export const themeCatalog: Record<ThemeBrandId, Record<ThemeMode, ThemeTokens>> = {
   monochrome: {
     light: monochromeLightTheme,
     dark: monochromeDarkTheme
@@ -204,17 +201,11 @@ export const themeCatalog: Record<
 }
 
 export function isThemeBrandId(value: unknown): value is ThemeBrandId {
-  return (
-    typeof value === 'string' &&
-    (THEME_BRANDS as readonly string[]).includes(value)
-  )
+  return typeof value === 'string' && (THEME_BRANDS as readonly string[]).includes(value)
 }
 
 export function isThemeMode(value: unknown): value is ThemeMode {
-  return (
-    typeof value === 'string' &&
-    (THEME_MODES as readonly string[]).includes(value)
-  )
+  return typeof value === 'string' && (THEME_MODES as readonly string[]).includes(value)
 }
 
 export function normalizeThemePreference(
@@ -289,9 +280,7 @@ export function createThemeCssVars(theme: ThemeTokens): Record<string, string> {
 
 export function applyThemeCssVars(
   theme: ThemeTokens,
-  target: HTMLElement | null = typeof document !== 'undefined'
-    ? document.documentElement
-    : null
+  target: HTMLElement | null = typeof document !== 'undefined' ? document.documentElement : null
 ): void {
   if (!target) {
     return
@@ -304,9 +293,7 @@ export function applyThemeCssVars(
 
 export function applyThemePreference(
   preference: ThemePreference,
-  target: HTMLElement | null = typeof document !== 'undefined'
-    ? document.documentElement
-    : null
+  target: HTMLElement | null = typeof document !== 'undefined' ? document.documentElement : null
 ): void {
   if (!target) {
     return

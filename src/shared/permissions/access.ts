@@ -1,13 +1,6 @@
-import type {
-  AppRouteAccessSubject,
-  AppRouteMetaLike,
-  AppRouteRecordRaw
-} from '@/router/types'
+import type { AppRouteAccessSubject, AppRouteMetaLike, AppRouteRecordRaw } from '@/router/types'
 
-export function hasRoles(
-  requiredRoles: string[] | undefined,
-  ownedRoles: string[]
-): boolean {
+export function hasRoles(requiredRoles: string[] | undefined, ownedRoles: string[]): boolean {
   if (!requiredRoles?.length) {
     return true
   }
@@ -19,10 +12,7 @@ export function hasPermissions(
   requiredPermissions: string[] | string | undefined,
   ownedPermissions: string[]
 ): boolean {
-  if (
-    !requiredPermissions ||
-    (Array.isArray(requiredPermissions) && !requiredPermissions.length)
-  ) {
+  if (!requiredPermissions || (Array.isArray(requiredPermissions) && !requiredPermissions.length)) {
     return true
   }
 

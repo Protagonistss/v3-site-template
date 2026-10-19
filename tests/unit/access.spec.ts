@@ -1,10 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
-import {
-  filterRoutesByAccess,
-  hasRouteAccess
-} from '@/shared/permissions/access'
 import type { AppRouteRecordRaw } from '@/router/types'
+import { filterRoutesByAccess, hasRouteAccess } from '@/shared/permissions/access'
 
 describe('access helpers', () => {
   it('grants access when role and permission both match', () => {

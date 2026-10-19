@@ -24,15 +24,10 @@ function appendAuthorization(
   return config
 }
 
-export function attachInterceptors(
-  client: AxiosInstance,
-  hooks: HttpClientRuntimeHooks
-): void {
+export function attachInterceptors(client: AxiosInstance, hooks: HttpClientRuntimeHooks): void {
   let unauthorizedTask: Promise<void> | null = null
 
-  client.interceptors.request.use((config) =>
-    appendAuthorization(config, hooks.getToken)
-  )
+  client.interceptors.request.use((config) => appendAuthorization(config, hooks.getToken))
 
   client.interceptors.response.use(
     (response) => response,
@@ -40,11 +35,9 @@ export function attachInterceptors(
       const normalizedError = normalizeRequestError(error)
 
       if (normalizedError.status === 401 && hooks.getToken()) {
-        unauthorizedTask ??= Promise.resolve(hooks.onUnauthorized?.()).finally(
-          () => {
-            unauthorizedTask = null
-          }
-        )
+        unauthorizedTask ??= Promise.resolve(hooks.onUnauthorized?.()).finally(() => {
+          unauthorizedTask = null
+        })
 
         await unauthorizedTask
       }

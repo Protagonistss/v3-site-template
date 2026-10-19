@@ -1,8 +1,5 @@
+import type { SystemUser, SystemUserPageResult } from '../src/modules/system-user/types'
 import type { PageQuery } from '../src/shared/request/types'
-import type {
-  SystemUser,
-  SystemUserPageResult
-} from '../src/modules/system-user/types'
 
 const users: SystemUser[] = [
   {
@@ -32,9 +29,7 @@ async function wait(delay = 180): Promise<void> {
   await new Promise((resolve) => setTimeout(resolve, delay))
 }
 
-export async function mockFetchUsers(
-  query: PageQuery
-): Promise<SystemUserPageResult> {
+export async function mockFetchUsers(query: PageQuery): Promise<SystemUserPageResult> {
   await wait()
 
   const keyword = query.keyword?.trim().toLowerCase()

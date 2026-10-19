@@ -23,9 +23,7 @@
             </svg>
           </div>
           <h2 class="login-form__title">欢迎回来</h2>
-          <p class="login-form__subtitle">
-            使用 Mock 账号即可直接进入后台示例。
-          </p>
+          <p class="login-form__subtitle">使用 Mock 账号即可直接进入后台示例。</p>
         </div>
 
         <UiForm
@@ -36,10 +34,7 @@
           @submit="handleSubmit"
         >
           <UiFormItem label="账号" path="username">
-            <UiInput
-              v-model="formState.username"
-              placeholder="admin / editor"
-            />
+            <UiInput v-model="formState.username" placeholder="admin / editor" />
           </UiFormItem>
 
           <UiFormItem label="密码" path="password">
@@ -71,14 +66,14 @@ import { useRoute, useRouter } from 'vue-router'
 
 import { appConfig } from '@/config/app'
 import { useLoading } from '@/shared/composables/use-loading'
-import { useAuthStore } from '@/stores/auth'
 import { getErrorMessage } from '@/shared/request/client'
+import { useAuthStore } from '@/stores/auth'
 import UiButton from '@/ui/primitives/UiButton.vue'
 import UiForm from '@/ui/primitives/UiForm.vue'
 import UiFormItem from '@/ui/primitives/UiFormItem.vue'
 import UiInput from '@/ui/primitives/UiInput.vue'
-import type { UiFormInstance, UiFormRules } from '@/ui/types/form'
 import { uiMessage } from '@/ui/services/message'
+import type { UiFormInstance, UiFormRules } from '@/ui/types/form'
 
 import LoginHero from '../components/LoginHero.vue'
 
@@ -116,8 +111,7 @@ async function handleSubmit() {
       await authStore.ensureRoutes(router)
 
       const redirect = route.query.redirect
-      const nextPath =
-        typeof redirect === 'string' ? redirect : appConfig.homePath
+      const nextPath = typeof redirect === 'string' ? redirect : appConfig.homePath
       await router.replace(nextPath)
     })
 
@@ -164,11 +158,7 @@ async function handleSubmit() {
   left: 50%;
   width: 600px;
   height: 600px;
-  background: radial-gradient(
-    circle,
-    var(--color-text-primary, #171717) 0%,
-    transparent 70%
-  );
+  background: radial-gradient(circle, var(--color-text-primary, #171717) 0%, transparent 70%);
   opacity: 0.05;
   transform: translate(-50%, -50%);
   content: '';

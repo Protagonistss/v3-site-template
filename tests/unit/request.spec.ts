@@ -32,9 +32,7 @@ describe('request helpers', () => {
   })
 
   it('normalizes timeout errors', () => {
-    const normalized = normalizeRequestError(
-      new AxiosError('timeout', 'ECONNABORTED')
-    )
+    const normalized = normalizeRequestError(new AxiosError('timeout', 'ECONNABORTED'))
 
     expect(normalized.kind).toBe('timeout')
     expect(normalized.message).toBe('请求超时，请稍后重试')
@@ -76,13 +74,7 @@ describe('request helpers', () => {
         config
       } satisfies AxiosResponse
 
-      throw new AxiosError(
-        'Unauthorized',
-        'ERR_BAD_REQUEST',
-        config,
-        null,
-        response
-      )
+      throw new AxiosError('Unauthorized', 'ERR_BAD_REQUEST', config, null, response)
     }
 
     const [firstError, secondError] = await Promise.all([

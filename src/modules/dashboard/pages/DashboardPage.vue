@@ -11,17 +11,11 @@
         <div class="metric-card">
           <div class="metric-card__left">
             <span class="metric-card__value">{{ metric.value }}</span>
-            <span
-              class="metric-card__trend"
-              :class="`metric-card__trend--${metric.tone}`"
-            >
+            <span class="metric-card__trend" :class="`metric-card__trend--${metric.tone}`">
               {{ metric.trend }}
             </span>
           </div>
-          <div
-            class="metric-card__icon"
-            :class="`metric-card__icon--${metric.tone}`"
-          >
+          <div class="metric-card__icon" :class="`metric-card__icon--${metric.tone}`">
             <svg
               v-if="metric.icon === 'orders'"
               width="24"
@@ -71,10 +65,7 @@
     </div>
 
     <div class="dashboard-page__content">
-      <AppCard
-        title="今日重点"
-        description="这里展示模块化目录下的业务数据读取方式。"
-      >
+      <AppCard title="今日重点" description="这里展示模块化目录下的业务数据读取方式。">
         <UiSkeleton :loading="loading" :rows="4">
           <ul class="todo-list">
             <li v-for="todo in todos" :key="todo" class="todo-list__item">
@@ -84,10 +75,7 @@
         </UiSkeleton>
       </AppCard>
 
-      <AppCard
-        title="当前权限"
-        description="从全局认证状态中读取角色与按钮权限。"
-      >
+      <AppCard title="当前权限" description="从全局认证状态中读取角色与按钮权限。">
         <div class="permission-panel">
           <UiDescriptions :items="permissionItems" :column="1" bordered />
         </div>

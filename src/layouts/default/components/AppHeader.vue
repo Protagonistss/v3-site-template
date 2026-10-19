@@ -71,9 +71,7 @@ const route = useRoute()
 const router = useRouter()
 
 const userInitial = computed(() => authStore.userInfo?.avatar ?? 'A')
-const userMenuOptions: UiDropdownOption[] = [
-  { label: '退出登录', key: 'logout' }
-]
+const userMenuOptions: UiDropdownOption[] = [{ label: '退出登录', key: 'logout' }]
 
 const breadcrumbs = computed(() => {
   let accumulated = ''
@@ -84,16 +82,10 @@ const breadcrumbs = computed(() => {
 
     const segment = record.path.startsWith('/')
       ? record.path
-      : `${accumulated.replace(/\/$/, '')}/${record.path}`.replace(
-          /\/{2,}/g,
-          '/'
-        )
+      : `${accumulated.replace(/\/$/, '')}/${record.path}`.replace(/\/{2,}/g, '/')
     accumulated = segment
 
-    if (
-      entries.length > 0 &&
-      entries[entries.length - 1].path === segment
-    ) {
+    if (entries.length > 0 && entries[entries.length - 1].path === segment) {
       entries[entries.length - 1].title = record.meta.title as string
       continue
     }
@@ -229,9 +221,8 @@ async function handleMenuSelect(key: string) {
   background: transparent;
   padding: 0;
   cursor: pointer;
-  transition:
-    transform var(--transition-duration-fast, 150ms)
-      var(--transition-ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1));
+  transition: transform var(--transition-duration-fast, 150ms)
+    var(--transition-ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1));
 }
 
 .app-header__avatar-btn:hover {

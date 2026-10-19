@@ -1,8 +1,8 @@
 import type { App, Directive } from 'vue'
 
+import { hasPermissions } from '@/shared/permissions/access'
 import { pinia } from '@/stores'
 import { useAuthStore } from '@/stores/auth'
-import { hasPermissions } from '@/shared/permissions/access'
 
 const permissionDirective: Directive<HTMLElement, string | string[]> = {
   mounted(el, binding) {

@@ -1,5 +1,5 @@
-import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
+import { computed, ref } from 'vue'
 
 import { appConfig } from '@/config/app'
 import { STORAGE_KEYS } from '@/shared/constants/app'
@@ -36,13 +36,8 @@ export const useThemeStore = defineStore('theme', () => {
   }
 
   function initialize() {
-    const persistedPreference = storage.getObject<Partial<ThemePreference>>(
-      STORAGE_KEYS.theme
-    )
-    const nextPreference = normalizeThemePreference(
-      persistedPreference,
-      defaultThemePreference
-    )
+    const persistedPreference = storage.getObject<Partial<ThemePreference>>(STORAGE_KEYS.theme)
+    const nextPreference = normalizeThemePreference(persistedPreference, defaultThemePreference)
     syncTheme(nextPreference)
   }
 

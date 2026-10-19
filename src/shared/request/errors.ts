@@ -1,11 +1,6 @@
 import { AxiosError } from 'axios'
 
-export type AppRequestErrorKind =
-  | 'business'
-  | 'http'
-  | 'network'
-  | 'timeout'
-  | 'unknown'
+export type AppRequestErrorKind = 'business' | 'http' | 'network' | 'timeout' | 'unknown'
 
 type AppRequestErrorOptions = {
   message: string
@@ -87,10 +82,7 @@ export function normalizeRequestError(
   })
 }
 
-export function getErrorMessage(
-  error: unknown,
-  fallbackMessage = '请求失败'
-): string {
+export function getErrorMessage(error: unknown, fallbackMessage = '请求失败'): string {
   return normalizeRequestError(error, fallbackMessage).message
 }
 

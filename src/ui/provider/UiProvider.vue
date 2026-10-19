@@ -14,7 +14,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
 import {
   darkTheme,
   NConfigProvider,
@@ -24,6 +23,7 @@ import {
   NMessageProvider,
   NNotificationProvider
 } from 'naive-ui'
+import { computed } from 'vue'
 
 import { useThemeStore } from '@/stores/theme'
 
@@ -31,11 +31,7 @@ import { createUiThemeOverrides } from './theme'
 
 const themeStore = useThemeStore()
 
-const naiveTheme = computed(() =>
-  themeStore.mode === 'dark' ? darkTheme : undefined
-)
+const naiveTheme = computed(() => (themeStore.mode === 'dark' ? darkTheme : undefined))
 
-const themeOverrides = computed(() =>
-  createUiThemeOverrides(themeStore.resolvedTokens)
-)
+const themeOverrides = computed(() => createUiThemeOverrides(themeStore.resolvedTokens))
 </script>

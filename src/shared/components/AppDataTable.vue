@@ -1,11 +1,6 @@
 <template>
   <div class="app-data-table">
-    <UiDataTable
-      :columns="columns"
-      :data="data"
-      :loading="loading"
-      :row-key="rowKey"
-    />
+    <UiDataTable :columns="columns" :data="data" :loading="loading" :row-key="rowKey" />
     <div v-if="pagination" class="app-data-table__pagination">
       <UiPagination
         :page="pagination.page"

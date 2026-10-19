@@ -28,9 +28,7 @@ export const useTabsStore = defineStore('tabs', {
       })
     },
     removeTab(fullPath: string) {
-      this.visitedTabs = this.visitedTabs.filter(
-        (item) => item.fullPath !== fullPath
-      )
+      this.visitedTabs = this.visitedTabs.filter((item) => item.fullPath !== fullPath)
     },
     reset() {
       this.visitedTabs = []

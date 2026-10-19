@@ -2,14 +2,14 @@ import { defineStore } from 'pinia'
 import type { Router } from 'vue-router'
 
 import { appConfig } from '@/config/app'
+import { fetchProfile, login as loginRequest } from '@/modules/auth/api'
+import type { LoginCommand, UserProfile } from '@/modules/auth/types'
 import { asyncRoutes } from '@/router/routes/modules'
 import type { AppRouteRecordRaw } from '@/router/types'
-import { filterRoutesByAccess } from '@/shared/permissions/access'
 import { STORAGE_KEYS } from '@/shared/constants/app'
+import { filterRoutesByAccess } from '@/shared/permissions/access'
 import { storage } from '@/shared/utils/storage'
-import { fetchProfile, login as loginRequest } from '@/modules/auth/api'
 import { useTabsStore } from '@/stores/tabs'
-import type { LoginCommand, UserProfile } from '@/modules/auth/types'
 
 type AuthSnapshot = Pick<UserProfile, 'roles' | 'permissions'>
 

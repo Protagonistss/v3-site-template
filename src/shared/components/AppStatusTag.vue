@@ -14,7 +14,5 @@ const props = defineProps<{
 }>()
 
 const label = computed(() => (props.status === 'enabled' ? '启用' : '停用'))
-const tagType = computed(() =>
-  props.status === 'enabled' ? 'success' : 'default'
-)
+const tagType = computed(() => (props.status === 'enabled' ? 'success' : 'default'))
 </script>

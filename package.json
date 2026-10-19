@@ -2,47 +2,56 @@
   "name": "vue3-admin-starter",
   "version": "0.1.0",
   "private": true,
-  "packageManager": "pnpm@9.13.2",
-  "engines": {
-    "node": "^20.19.0 || >=22.12.0"
-  },
   "description": "Production-ready Vue 3 admin scaffold with Vite, TypeScript, Pinia and RBAC.",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "pnpm typecheck && vite build",
     "preview": "vite preview",
     "typecheck": "vue-tsc --noEmit",
-    "lint": "eslint src build mock tests vite.config.ts vitest.config.ts playwright.config.ts",
-    "lint:fix": "eslint src build mock tests vite.config.ts vitest.config.ts playwright.config.ts --fix",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
+    "lint": "oxlint .",
+    "lint:fix": "oxlint --fix .",
+    "format": "oxfmt .",
+    "format:check": "oxfmt --check .",
     "test": "pnpm test:unit",
     "test:unit": "vitest run",
     "test:unit:watch": "vitest",
     "test:e2e": "playwright test"
   },
   "dependencies": {
-    "axios": "^1.7.7",
-    "naive-ui": "^2.42.0",
+    "@vue/devtools-api": "^8.2.1",
+    "axios": "^1.20.0",
+    "naive-ui": "^2.45.3",
     "nprogress": "^0.2.0",
-    "pinia": "^2.2.2",
-    "vue": "^3.5.12",
+    "pinia": "^4.1.0",
+    "vue": "^3.5.44",
     "vue-router": "^4.4.5"
   },
   "devDependencies": {
-    "@ithinku/eslint-config-vue": "0.1.1",
-    "@ithinku/tsconfig": "0.0.7",
-    "@playwright/test": "^1.48.2",
+    "@ithinku/oxfmt-config": "0.1.2",
+    "@ithinku/oxlint-config": "0.1.0",
+    "@ithinku/tsconfig": "0.0.8",
+    "@playwright/test": "^1.64.1",
     "@types/node": "^22.7.7",
     "@types/nprogress": "^0.2.3",
-    "@vitejs/plugin-vue": "^6.0.1",
-    "eslint": "9.39.2",
+    "@vitejs/plugin-vue": "^6.0.10",
     "jsdom": "^25.0.1",
-    "prettier": "^3.8.1",
-    "sass-embedded": "^1.93.2",
+    "oxfmt": "0.73.0",
+    "oxlint": "1.88.0",
+    "sass-embedded": "^1.105.2",
     "typescript": "^5.6.3",
-    "vite": "^8.0.2",
+    "vite": "^8.3.4",
     "vitest": "^4.0.3",
-    "vue-tsc": "^3.1.0"
+    "vue-tsc": "^3.3.13"
+  },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "packageManager": "pnpm@9.13.2",
+  "pnpm": {
+    "overrides": {
+      "lodash": "^4.18.0",
+      "lodash-es": "^4.18.0"
+    }
   }
 }

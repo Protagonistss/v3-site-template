@@ -1,10 +1,6 @@
 <template>
   <n-descriptions :bordered="bordered" :column="column">
-    <n-descriptions-item
-      v-for="item in items"
-      :key="item.label"
-      :label="item.label"
-    >
+    <n-descriptions-item v-for="item in items" :key="item.label" :label="item.label">
       {{ item.value }}
     </n-descriptions-item>
   </n-descriptions>

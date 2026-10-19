@@ -1,12 +1,18 @@
 # Vue 3 Admin Starter
 
-一个面向生产环境的 Vue 3 中后台脚手架，默认提供：
+面向生产环境的 Vue 3 中后台脚手架。状态用 Pinia 4，界面通过 `src/ui` 适配层访问 Naive UI，权限、主题和请求层都有独立边界。
 
-- Vite + Vue 3 + TypeScript
-- Pinia + Vue Router
-- RBAC 路由守卫和按钮级权限指令
-- Axios 请求层、Mock 数据目录、全局异常处理
-- Vitest / Playwright 测试骨架
+Node `^20.19.0 || >=22.12.0` · 包管理器 pnpm 9
+
+## 技术栈
+
+| 层 | 选型 |
+| --- | --- |
+| 运行时 | Vue 3.5 · Vue Router 4 · Pinia 4 |
+| 构建 | Vite 8 · TypeScript · `sass-embedded`（modern compiler） |
+| 界面 | Naive UI，业务代码只经过 `src/ui` |
+| 质量 | Oxlint · oxfmt · vue-tsc · Vitest · Playwright |
+| 规范 | `@ithinku/oxlint-config` · `@ithinku/oxfmt-config` · `@ithinku/tsconfig` |
 
 ## 快速开始
 
@@ -15,48 +21,53 @@ pnpm install
 pnpm dev
 ```
 
-Node 版本要求：`^20.19.0 || >=22.12.0`
+开发服务默认在 `http://localhost:5173`。Mock 开启时可用：
 
-Sass 运行时：`sass-embedded`，在 Vite 8 下默认走 modern compiler API。
+| 角色 | 账号 |
+| --- | --- |
+| 管理员 | `admin` / `123456` |
+| 运营 | `editor` / `123456` |
 
-## 目录约定
+## 命令
+
+| 命令 | 作用 |
+| --- | --- |
+| `pnpm dev` | 启动开发服务 |
+| `pnpm build` | 类型检查后打包 |
+| `pnpm preview` | 预览构建产物 |
+| `pnpm typecheck` | 只跑 `vue-tsc` |
+| `pnpm lint` | Oxlint |
+| `pnpm lint:fix` | Oxlint 并自动修复 |
+| `pnpm format` | oxfmt 写回 |
+| `pnpm format:check` | oxfmt 只检查 |
+| `pnpm test:unit` | Vitest |
+| `pnpm test:e2e` | Playwright |
+
+## 目录
 
 ```text
 src/
-├─ app/        # 启动编排
-├─ config/     # 应用配置
-├─ layouts/    # 布局壳
-├─ modules/    # 业务模块
-├─ plugins/    # 第三方注册
-├─ router/     # 路由装配
-├─ shared/     # 跨模块公共能力
-├─ stores/     # 全局状态
-├─ styles/     # 样式入口与基础样式
-├─ theme/      # 品牌主题单一源与 CSS 变量生成
-└─ types/      # 全局类型声明
+├─ app/        启动、路由守卫、全局异常
+├─ modules/    按业务切分的页面、接口和路由
+├─ layouts/    默认壳与空白壳
+├─ ui/         Naive UI 适配层，业务代码的唯一 UI 入口
+├─ theme/      品牌色与 CSS 变量
+├─ stores/     Pinia
+├─ router/     静态路由与动态路由装配
+├─ shared/     请求、权限、通用组件
+└─ styles/     全局样式
 ```
 
-## 运行命令
+业务模块放在 `src/modules/<name>/`，自行提供 `routes`、`api` 和页面。组件库引用留在 `src/ui`，Oxlint 会拦住 `src/ui` 以外对 `naive-ui`、`element-plus` 的直接导入。
 
-- `pnpm dev` 启动开发环境
-- `pnpm build` 类型检查并打包
-- `pnpm lint` 执行 ESLint
-- `pnpm test:unit` 执行 Vitest
-- `pnpm test:e2e` 执行 Playwright
+## 环境变量
 
-## 环境变量约定
+共享配置：`.env`、`.env.development`、`.env.production`、`.env.staging`。  
+个人覆盖：`.env.local` 及 `*.local`，不提交。不要把密钥放进可提交的 `.env*`。
 
-- `.env`、`.env.development`、`.env.production`、`.env.staging` 用于团队共享的环境配置，可以提交到仓库
-- `.env.local`、`.env.development.local`、`.env.production.local` 等本地覆盖文件仅供个人使用，不提交到仓库
-- 前端暴露变量统一使用 `VITE_` 前缀，当前项目使用：
-  - `VITE_APP_TITLE` 应用标题
-  - `VITE_API_BASE_URL` 接口基础地址
-  - `VITE_ENABLE_MOCK` 是否启用 Mock
-- 不要在可提交的 `.env*` 文件中存放密钥、令牌、密码等敏感信息
-
-## 默认账号
-
-当 `VITE_ENABLE_MOCK=true` 时，可直接使用：
-
-- 管理员：`admin / 123456`
-- 运营：`editor / 123456`
+| 变量 | 作用 |
+| --- | --- |
+| `VITE_APP_TITLE` | 应用标题 |
+| `VITE_APP_BASE` | 部署基础路径，默认 `/` |
+| `VITE_API_BASE_URL` | 接口前缀，默认 `/api` |
+| `VITE_ENABLE_MOCK` | `true` 时启用 Mock |

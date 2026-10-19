@@ -2,8 +2,7 @@
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity
-    var(--transition-duration-normal, 250ms)
+  transition: opacity var(--transition-duration-normal, 250ms)
     var(--transition-ease-smooth, cubic-bezier(0.25, 0.1, 0.25, 1));
 }
 

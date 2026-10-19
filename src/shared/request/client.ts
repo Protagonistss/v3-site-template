@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import { envConfig } from '@/config/env'
+
 import { AppRequestError, getErrorMessage } from './errors'
 import { attachInterceptors } from './interceptors'
 import type { HttpClientRuntimeHooks } from './interceptors'

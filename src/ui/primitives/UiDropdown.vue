@@ -5,9 +5,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
 import { NDropdown } from 'naive-ui'
 import type { DropdownOption } from 'naive-ui'
+import { computed } from 'vue'
 
 import type { UiDropdownOption } from '@/ui/types/dropdown'
 

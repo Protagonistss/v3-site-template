@@ -13,8 +13,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
 import { NTag } from 'naive-ui'
+import { computed } from 'vue'
 
 defineOptions({
   inheritAttrs: false

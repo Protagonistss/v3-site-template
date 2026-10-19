@@ -18,7 +18,6 @@ export type AppRouteRecordRaw = RouteRecordRaw & {
 
 declare module 'vue-router' {
   // RouteMeta is intentionally augmented with the shared app-specific fields.
-  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   interface RouteMeta extends AppRouteMeta {}
 }
 

@@ -11,6 +11,8 @@
   "include": [
     "build/**/*.ts",
     "mock/**/*.ts",
+    "oxfmt.config.ts",
+    "oxlint.config.ts",
     "vite.config.ts",
     "vitest.config.ts",
     "playwright.config.ts"

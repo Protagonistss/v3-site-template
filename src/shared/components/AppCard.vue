@@ -1,8 +1,5 @@
 <template>
-  <article
-    :class="['app-card', { 'app-card--animated': animate }]"
-    :style="staggerStyle"
-  >
+  <article :class="['app-card', { 'app-card--animated': animate }]" :style="staggerStyle">
     <header v-if="title || $slots.header" class="app-card__header">
       <slot name="header">
         <div>
@@ -34,7 +31,7 @@ const props = withDefaults(
 )
 
 const staggerStyle = computed(() => {
-  if (props.staggerIndex == null) return undefined
+  if (props.staggerIndex === null || props.staggerIndex === undefined) return undefined
   return { animationDelay: `${props.staggerIndex * 80}ms` }
 })
 </script>

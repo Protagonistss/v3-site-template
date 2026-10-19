@@ -6,9 +6,7 @@ export interface UiFormRule {
   trigger?: UiFormTrigger | UiFormTrigger[]
 }
 
-export type UiFormRules<T extends Record<string, unknown>> = Partial<
-  Record<keyof T, UiFormRule[]>
->
+export type UiFormRules<T extends Record<string, unknown>> = Partial<Record<keyof T, UiFormRule[]>>
 
 export interface UiFormInstance {
   validate: () => Promise<void>

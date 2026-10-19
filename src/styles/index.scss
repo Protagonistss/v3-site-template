@@ -4,53 +4,91 @@
 // ─── Global keyframes ───────────────────────────────────────
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes fadeInDown {
-  from { opacity: 0; transform: translateY(-12px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.96); }
-  to   { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes cardEntrance {
-  from { opacity: 0; transform: translateY(16px) scale(0.98); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 @keyframes subtlePulse {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: 0.6; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
 }
 
 @keyframes glitch {
-  0%, 100% { transform: translate(0); }
-  20%      { transform: translate(-2px, 1px); }
-  40%      { transform: translate(2px, -1px); }
-  60%      { transform: translate(-1px, 2px); }
-  80%      { transform: translate(1px, -2px); }
+  0%,
+  100% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 1px);
+  }
+  40% {
+    transform: translate(2px, -1px);
+  }
+  60% {
+    transform: translate(-1px, 2px);
+  }
+  80% {
+    transform: translate(1px, -2px);
+  }
 }
 
 // ─── Base styles ─────────────────────────────────────────────
 
 body {
-  font-family: var(
-    --font-sans,
-    'Manrope',
-    'PingFang SC',
-    'Microsoft YaHei',
-    sans-serif
-  );
+  font-family: var(--font-sans, 'Manrope', 'PingFang SC', 'Microsoft YaHei', sans-serif);
   color: var(--color-text-primary, #0f172a);
   background: var(--color-primary-soft, #eaf4ff);
 }
@@ -60,10 +98,7 @@ a {
 }
 
 #nprogress .bar {
-  background: var(
-    --gradient-progress,
-    linear-gradient(90deg, #1976d2, #21cbf3)
-  );
+  background: var(--gradient-progress, linear-gradient(90deg, #1976d2, #21cbf3));
 }
 
 // ─── Reduced motion (a11y) ──────────────────────────────────

@@ -1,9 +1,6 @@
 <template>
   <section class="system-user-page">
-    <AppCard
-      title="用户管理"
-      description="业务模块内自带页面、API 和局部组件。"
-    >
+    <AppCard title="用户管理" description="业务模块内自带页面、API 和局部组件。">
       <AppSearchForm class="system-user-page__toolbar" @submit="handleSearch">
         <UiInput
           v-model="query.keyword"
@@ -14,9 +11,7 @@
         />
         <template #actions>
           <UiButton native-type="submit">查询</UiButton>
-          <UiButton v-permission="'user:create'" type="primary"
-            >新建用户</UiButton
-          >
+          <UiButton v-permission="'user:create'" type="primary">新建用户</UiButton>
         </template>
       </AppSearchForm>
 
@@ -38,11 +33,11 @@
 <script setup lang="ts">
 import { h, reactive } from 'vue'
 
+import type { AppDataTableColumn } from '@/shared/components/app-data-table'
 import AppCard from '@/shared/components/AppCard.vue'
 import AppDataTable from '@/shared/components/AppDataTable.vue'
 import AppSearchForm from '@/shared/components/AppSearchForm.vue'
 import AppStatusTag from '@/shared/components/AppStatusTag.vue'
-import type { AppDataTableColumn } from '@/shared/components/app-data-table'
 import { useLoading } from '@/shared/composables/use-loading'
 import { getErrorMessage } from '@/shared/request/client'
 import UiButton from '@/ui/primitives/UiButton.vue'

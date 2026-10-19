@@ -14,9 +14,7 @@ export function setupErrorHandler(app: App): void {
   })
 }
 
-function resolveComponentName(
-  instance: ComponentPublicInstance | null
-): string | undefined {
+function resolveComponentName(instance: ComponentPublicInstance | null): string | undefined {
   if (!instance) {
     return undefined
   }
@@ -28,7 +26,5 @@ function resolveComponentName(
   }
 
   const componentName = instance.$?.type?.name
-  return typeof componentName === 'string' && componentName
-    ? componentName
-    : undefined
+  return typeof componentName === 'string' && componentName ? componentName : undefined
 }

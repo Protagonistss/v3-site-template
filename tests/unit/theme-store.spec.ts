@@ -3,8 +3,8 @@ import { beforeEach, describe, expect, it } from 'vitest'
 
 import { appConfig } from '@/config/app'
 import { STORAGE_KEYS } from '@/shared/constants/app'
-import { createThemeCssVars, resolveThemeTokens } from '@/theme/brand'
 import { useThemeStore } from '@/stores/theme'
+import { createThemeCssVars, resolveThemeTokens } from '@/theme/brand'
 
 describe('theme store', () => {
   const defaultTokens = resolveThemeTokens({
@@ -79,9 +79,7 @@ describe('theme store', () => {
 
     expect(themeStore.brand).toBe('monochrome')
     expect(themeStore.mode).toBe('dark')
-    expect(
-      document.documentElement.style.getPropertyValue('--color-primary')
-    ).toBe(
+    expect(document.documentElement.style.getPropertyValue('--color-primary')).toBe(
       resolveThemeTokens({
         brand: 'monochrome',
         mode: 'dark'

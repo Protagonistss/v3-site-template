@@ -10,9 +10,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
 import { NMenu } from 'naive-ui'
 import type { MenuOption } from 'naive-ui'
+import { computed } from 'vue'
 
 import type { UiMenuOption } from '@/ui/types/menu'
 

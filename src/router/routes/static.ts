@@ -1,8 +1,8 @@
-import type { AppRouteRecordRaw } from '../types'
-
 import ForbiddenPage from '@/app/pages/ForbiddenPage.vue'
 import NotFoundPage from '@/app/pages/NotFoundPage.vue'
 import LoginPage from '@/modules/auth/pages/LoginPage.vue'
+
+import type { AppRouteRecordRaw } from '../types'
 
 export const staticRoutes: AppRouteRecordRaw[] = [
   {

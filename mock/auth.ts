@@ -1,8 +1,4 @@
-import type {
-  LoginCommand,
-  LoginResult,
-  UserProfile
-} from '../src/modules/auth/types'
+import type { LoginCommand, LoginResult, UserProfile } from '../src/modules/auth/types'
 
 const mockUsers: Array<UserProfile & { password: string; token: string }> = [
   {
@@ -29,9 +25,7 @@ async function wait(delay = 200): Promise<void> {
   await new Promise((resolve) => setTimeout(resolve, delay))
 }
 
-function toUserProfile(
-  account: UserProfile & { password: string; token: string }
-): UserProfile {
+function toUserProfile(account: UserProfile & { password: string; token: string }): UserProfile {
   return {
     id: account.id,
     name: account.name,

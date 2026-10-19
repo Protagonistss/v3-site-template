@@ -9,9 +9,9 @@
 </template>
 
 <script setup lang="ts" generic="Row extends Record<string, unknown>">
-import { computed } from 'vue'
 import { NDataTable } from 'naive-ui'
 import type { DataTableColumns } from 'naive-ui'
+import { computed } from 'vue'
 
 import type { UiDataTableColumn } from '@/ui/types/table'
 

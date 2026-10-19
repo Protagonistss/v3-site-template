@@ -2,9 +2,7 @@ import type { GlobalThemeOverrides } from 'naive-ui'
 
 import type { ThemeTokens } from '@/theme/brand'
 
-export function createUiThemeOverrides(
-  theme: ThemeTokens
-): GlobalThemeOverrides {
+export function createUiThemeOverrides(theme: ThemeTokens): GlobalThemeOverrides {
   return {
     common: {
       primaryColor: theme.color.primary,

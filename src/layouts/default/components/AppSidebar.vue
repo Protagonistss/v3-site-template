@@ -1,10 +1,5 @@
 <template>
-  <aside
-    :class="[
-      'app-sidebar',
-      { 'app-sidebar--collapsed': appStore.sidebarCollapsed }
-    ]"
-  >
+  <aside :class="['app-sidebar', { 'app-sidebar--collapsed': appStore.sidebarCollapsed }]">
     <RouterLink class="app-sidebar__brand" to="/dashboard">
       <img :src="logoUrl" alt="logo" :style="{ filter: logoFilter }" />
       <span v-show="!appStore.sidebarCollapsed">Admin Starter</span>
@@ -43,9 +38,7 @@ const authStore = useAuthStore()
 const themeStore = useThemeStore()
 
 const logoFilter = computed(() =>
-  themeStore.mode === 'dark'
-    ? 'grayscale(1) invert(1)'
-    : 'grayscale(1)'
+  themeStore.mode === 'dark' ? 'grayscale(1) invert(1)' : 'grayscale(1)'
 )
 
 const menuOptions = computed(() =>
@@ -58,16 +51,13 @@ const activeMenuKey = computed(() => {
   const availableKeys = new Set(collectMenuKeys(menuOptions.value))
   const matchedPath = [...route.matched]
     .map((record) => record.path)
-    .reverse()
+    .toReversed()
     .find((path) => availableKeys.has(path))
 
   return matchedPath ?? route.path
 })
 
-function createMenuOption(
-  routeRecord: AppRouteRecordRaw,
-  parentPath = ''
-): UiMenuOption | null {
+function createMenuOption(routeRecord: AppRouteRecordRaw, parentPath = ''): UiMenuOption | null {
   if (routeRecord.meta.hidden) {
     return null
   }
@@ -94,10 +84,7 @@ function createMenuOption(
 }
 
 function collectMenuKeys(options: UiMenuOption[]): string[] {
-  return options.flatMap((option) => [
-    option.key,
-    ...collectMenuKeys(option.children ?? [])
-  ])
+  return options.flatMap((option) => [option.key, ...collectMenuKeys(option.children ?? [])])
 }
 
 async function handleSelect(key: string) {
@@ -217,7 +204,9 @@ async function handleSelect(key: string) {
 }
 
 :deep(.n-menu-item-content--selected .n-menu-item-content__icon),
-:deep(.n-menu-item-content--selected .n-menu-item-content-header .n-menu-item-content-header__extra) {
+:deep(
+  .n-menu-item-content--selected .n-menu-item-content-header .n-menu-item-content-header__extra
+) {
   color: var(--color-text-contrast) !important;
 }
 </style>

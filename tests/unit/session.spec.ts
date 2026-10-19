@@ -1,6 +1,6 @@
 import { createPinia, setActivePinia } from 'pinia'
-import type { Router } from 'vue-router'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
+import type { Router } from 'vue-router'
 
 import { appConfig } from '@/config/app'
 import { useAuthStore } from '@/stores/auth'

@@ -1,9 +1,10 @@
-import { defineConfig, loadEnv } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
 
-import { createProxy } from './build/vite/proxy'
+import { defineConfig, loadEnv } from 'vite'
+
 import { readAppEnv } from './build/vite/env'
 import { createVitePlugins } from './build/vite/plugins'
+import { createProxy } from './build/vite/proxy'
 
 export default defineConfig(({ mode }) => {
   const viteEnv = loadEnv(mode, process.cwd(), '')
@@ -55,10 +56,7 @@ export default defineConfig(({ mode }) => {
               return 'ui'
             }
 
-            if (
-              id.includes('node_modules/axios/') ||
-              id.includes('node_modules/nprogress/')
-            ) {
+            if (id.includes('node_modules/axios/') || id.includes('node_modules/nprogress/')) {
               return 'vendor'
             }
 
